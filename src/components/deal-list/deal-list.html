@@ -1,0 +1,21 @@
+<ion-content padding>
+  <ion-list>
+    <ion-card *ngFor="let deal of deals, let odd=odd">
+      <img src="../../assets/img/city.png"> 
+      {{deal.title}}
+      <ion-fab right top>
+        <button ion-fab>
+      <ion-icon name="pin"></ion-icon>
+    </button>
+      </ion-fab>
+      <ion-fab right down>
+        <button ion-fab>
+      <ion-icon name="pin"></ion-icon>
+    </button>
+      </ion-fab>
+      <ion-fab left top>
+      <ion-icon name="usd"></ion-icon>
+      </ion-fab>
+    </ion-card>
+  </ion-list>
+</ion-content>
