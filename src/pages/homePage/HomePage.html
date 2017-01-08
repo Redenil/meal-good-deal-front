@@ -1,0 +1,32 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>MealDeal</ion-title>
+    <ion-buttons *ngIf="!inSearch" end>
+      <button ion-button (click)="newShare()">  
+        <ion-icon name="restaurant"></ion-icon>   
+      </button>
+      <button ion-button ion-icon type="search" (click)="launchSearch()">
+        <ion-icon name="search"></ion-icon>
+      </button>
+    </ion-buttons>
+     <ion-input *ngIf="inSearch" type="search" placeholder="Text Input" style="float:right">
+       <ion-icon name="search" item-right icon-left></ion-icon> 
+     </ion-input>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <h3>Sharing your city good plans</h3>
+
+  <p>
+    If you want to share a good plan with your friends, let's do it
+  </p>
+
+  <deal-list *ngIf="!connected">
+  </deal-list>
+  <page-login *ngIf="connected">
+  </page-login>
+</ion-content>
