@@ -36,6 +36,23 @@ export class DealDataService {
                 }
             });
         });
+    }
 
+    createDeal(deal: DealModel): Promise<boolean> {
+        var parseObject = new Parse.Object('MealDeal');
+        return new Promise(function (resolve, reject) {
+            parseObject.set('title', deal.title);
+            parseObject.set('description', deal.description);
+            parseObject.set('location', deal.location);
+            parseObject.set('price', Number(deal.price));
+
+            parseObject.save().then(
+                function (obj) {
+                    resolve(true);
+                },
+                function (err) {
+                    resolve(false);
+                });
+        });
     }
 }

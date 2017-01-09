@@ -3,45 +3,32 @@ import { NavController, NavParams } from 'ionic-angular';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms'
 import { Ionic2Rating } from 'ionic2-rating';
 import { Parse } from 'parse';
+import { DealDataService } from '../../services/services'
+import { DealModel } from '../../services/models'
 
 
 @Component({
   selector: 'page-share-deal',
-  templateUrl: 'share-deal.html'
+  templateUrl: 'share-deal.html',
+  providers: [DealDataService]
 })
 export class ShareDealPage {
   public planGroup: FormGroup;
   public rate: Number;
-  public mealDeal: any;
-  public title: any;
+  public mealDeal: DealModel;
 
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
-    private formBuilder: FormBuilder) {
-    Parse.initialize('raouafi23');
-    Parse.serverURL = 'http://localhost:1337/parse';
-
-    this.mealDeal = new Parse.Object('MealDeal');
+    private dealDataService: DealDataService) {
+    this.mealDeal = new DealModel();
   }
 
   ionViewDidLoad() {
   }
 
   savePlan() {
-    var mealDeal2 = new Parse.Object('MealDeal');
-
-    mealDeal2.set('title', this.mealDeal.title);
-    mealDeal2.set('description', this.mealDeal.description);
-    mealDeal2.set('location', this.mealDeal.location);
-    mealDeal2.set('price', Number(this.mealDeal.price));
-
-    // Save object to DB
-    mealDeal2.save().then(
-      function (obj) {
-        console.log("'New object created with objectId: " + mealDeal2.id);
-      },
-      function (err) {
-        console.log('Failed to create new object, with error code: ' + err.message);
-      });
+    this.dealDataService.createDeal(this.mealDeal).then(p => {
+      console.log('save ok' + p);
+    });
   }
 }
