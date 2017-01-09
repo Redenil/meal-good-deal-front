@@ -1,40 +1,25 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { Parse } from 'parse';
+import { DealDataService } from '../../services/services'
+
 
 @Component({
   selector: 'deal-list',
-  templateUrl: 'deal-list.html'
+  templateUrl: 'deal-list.html',
+  providers: [DealDataService]
 })
 export class DealList {
   public deals = [];
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
-    Parse.initialize('raouafi23');
-    Parse.serverURL = 'http://localhost:1337/parse';
+  constructor(
+    public navCtrl: NavController,
+    public navParams: NavParams,
+    public dealDataService: DealDataService) {
+
   }
 
   ngOnInit() {
-    var list = [];
-    var query = new Parse.Query('MealDeal');
-    query.find({
-      success: function (results) {
-        for (var i = 0; i < results.length; i++) {
-          var model = results[i];
-          var mealDeal = {
-            title: model.get('title'),
-            description: model.get('description'),
-            location: model.get('location'),
-          }
-          list.push(mealDeal);
-        }
-      },
-
-      error: function (error) {
-        // error is an instance of Parse.Error.
-      }
-    });
-
-    this.deals = list;
+    this.dealDataService.getDeals().then(result => { this.deals = result; })
   }
 }
