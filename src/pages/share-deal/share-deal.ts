@@ -6,30 +6,21 @@ import { Parse } from 'parse';
 
 
 @Component({
-  selector: 'page-share-plan',
-  templateUrl: 'share-plan.html'
+  selector: 'page-share-deal',
+  templateUrl: 'share-deal.html'
 })
-export class SharePlanPage {
-
+export class ShareDealPage {
   public planGroup: FormGroup;
   public rate: Number;
   public mealDeal: any;
   public title: any;
 
-  public MealDeal: any;
-
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
     private formBuilder: FormBuilder) {
-    this.planGroup = new FormGroup({
-      title: new FormControl(),
-      description: new FormControl(),
-      location: new FormControl()
-    });
     Parse.initialize('raouafi23');
     Parse.serverURL = 'http://localhost:1337/parse';
 
-    // var MealDeal = new Parse.Object.extend('MealDeal');
     this.mealDeal = new Parse.Object('MealDeal');
   }
 

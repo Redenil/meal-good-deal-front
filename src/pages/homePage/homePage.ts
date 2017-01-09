@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
-import { SharePlanPage } from '../share-plan/share-plan';
+import { ShareDealPage } from '../share-deal/share-deal';
 import { Parse } from 'parse';
 import { DealList } from '../../components/deal-list/deal-list';
 import { LoginPage } from '../login/login';
@@ -22,7 +22,7 @@ export class HomePage {
   }
 
   newShare() {
-    this.navCtrl.push(SharePlanPage);
+    this.navCtrl.push(ShareDealPage);
   }
 
   launchSearch() {

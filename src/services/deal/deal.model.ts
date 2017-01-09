@@ -7,6 +7,5 @@ export class DealModel {
     public rate: number;
 
     constructor() {
-
     }
 }

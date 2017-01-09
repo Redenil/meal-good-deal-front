@@ -2,7 +2,7 @@ import { Component, ViewChild } from '@angular/core';
 import { Nav, Platform } from 'ionic-angular';
 import { StatusBar, Splashscreen } from 'ionic-native';
 
-import { HomePage, Page2, SharePlanPage } from '../pages/pages';
+import { HomePage} from '../pages/pages';
 
 import { TabsPage } from '../pages/tabs/tabs';
 
@@ -13,18 +13,12 @@ export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
   rootPage: any = TabsPage;
-  // page2: any = Page2;
-  // sharePlan: any = SharePlanPage;
 
   pages: Array<{ title: string, component: any }>;
 
   constructor(public platform: Platform) {
     this.initializeApp();
     // used for an example of ngFor and navigation
-    this.pages = [
-      { title: 'Home Page', component: HomePage },
-      { title: 'Page Two', component: Page2 },
-    ];
   }
 
   initializeApp() {

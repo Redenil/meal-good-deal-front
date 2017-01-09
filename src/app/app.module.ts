@@ -2,7 +2,7 @@ import { NgModule, ErrorHandler } from '@angular/core';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
 import { ConfigHelper } from '../helpers/configHelper';
-import { HomePage, Page2, SharePlanPage, LoginPage } from '../pages/pages';
+import { HomePage, Page2, ShareDealPage, LoginPage } from '../pages/pages';
 import { Ionic2Rating } from 'ionic2-rating';
 import { DealList } from '../components/deal-list/deal-list';
 import { TabsPage } from '../pages/tabs/tabs';
@@ -13,7 +13,7 @@ import { DealDataService } from '../services/services';
     MyApp,
     HomePage,
     Page2,
-    SharePlanPage,
+    ShareDealPage,
     Ionic2Rating,
     DealList,
     LoginPage,
@@ -27,7 +27,7 @@ import { DealDataService } from '../services/services';
     MyApp,
     HomePage,
     Page2,
-    SharePlanPage,
+    ShareDealPage,
     DealList,
     LoginPage,
     TabsPage
