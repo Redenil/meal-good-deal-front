@@ -1,9 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
-import { ShareDealPage } from '../share-deal/share-deal';
-import { Parse } from 'parse';
+import { LoginPage, ShareDealPage } from '../pages';
 import { DealList } from '../../components/deal-list/deal-list';
-import { LoginPage } from '../login/login';
 
 @Component({
   selector: 'page-HomePage',

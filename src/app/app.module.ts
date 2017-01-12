@@ -2,11 +2,12 @@ import { NgModule, ErrorHandler } from '@angular/core';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
 import { ConfigHelper } from '../helpers/configHelper';
-import { HomePage, ShareDealPage, LoginPage } from '../pages/pages';
+import { HomePage, ShareDealPage, LoginPage, CameraPage } from '../pages/pages';
 import { Ionic2Rating } from 'ionic2-rating';
 import { DealList } from '../components/deal-list/deal-list';
 import { TabsPage } from '../pages/tabs/tabs';
 import { DealDataService } from '../services/services';
+import { Storage } from '@ionic/storage';
 
 @NgModule({
   declarations: [
@@ -16,6 +17,7 @@ import { DealDataService } from '../services/services';
     Ionic2Rating,
     DealList,
     LoginPage,
+    CameraPage,
     TabsPage
   ],
   imports: [
@@ -28,6 +30,7 @@ import { DealDataService } from '../services/services';
     ShareDealPage,
     DealList,
     LoginPage,
+    CameraPage,
     TabsPage
   ],
   providers: [
@@ -35,6 +38,7 @@ import { DealDataService } from '../services/services';
       provide: ErrorHandler,
       useClass: IonicErrorHandler
     },
+    Storage,
     ConfigHelper,
     DealDataService]
 })

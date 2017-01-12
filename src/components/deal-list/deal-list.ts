@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
-import { Parse } from 'parse';
 import { DealDataService } from '../../services/services'
 
 
@@ -20,6 +19,7 @@ export class DealList {
   }
 
   ngOnInit() {
-    this.dealDataService.getDeals().then(result => { this.deals = result; })
+    
+    // this.dealDataService.getDeals().then(result => { this.deals = result; })
   }
 }

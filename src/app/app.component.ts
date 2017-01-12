@@ -1,9 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { Nav, Platform } from 'ionic-angular';
 import { StatusBar, Splashscreen } from 'ionic-native';
-
-import { HomePage} from '../pages/pages';
-
 import { TabsPage } from '../pages/tabs/tabs';
 
 @Component({
@@ -11,10 +8,7 @@ import { TabsPage } from '../pages/tabs/tabs';
 })
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
-
   rootPage: any = TabsPage;
-
-  pages: Array<{ title: string, component: any }>;
 
   constructor(public platform: Platform) {
     this.initializeApp();

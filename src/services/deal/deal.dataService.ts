@@ -8,8 +8,10 @@ export class DealDataService {
     public serverApi: any;
 
     constructor(public config: ConfigHelper) {
-        Parse.initialize(config.configurations.parseMasterKey);
+        Parse.initialize(config.configurations.parseApplicationId);
+        Parse.masterKey = config.configurations.parseMasterKey;
         Parse.serverURL = config.configurations.parseServerUrl;
+        Parse.javaScriptKey = config.configurations.javaScriptKey;
     }
 
     getDeals(): Promise<Array<DealModel>> {
@@ -46,12 +48,14 @@ export class DealDataService {
             parseObject.set('location', deal.location);
             parseObject.set('price', Number(deal.price));
 
+            // var parseFile = new Parse.File('dealPicture', deal.fileImage);
+            // parseObject.set('file', parseFile);
             parseObject.save().then(
                 function (obj) {
                     resolve(true);
                 },
                 function (err) {
-                    resolve(false);
+                    reject(err);
                 });
         });
     }

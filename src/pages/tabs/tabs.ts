@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 
-import { HomePage } from '../homePage/homePage';
-import { ShareDealPage } from '../share-deal/share-deal';
+import { HomePage, ShareDealPage, CameraPage } from '../pages';
 
 @Component({
   templateUrl: 'tabs.html'
@@ -11,6 +10,7 @@ export class TabsPage {
   // should be each tab's root Page
   homePageRoot: any = HomePage;
   shareDealRoot: any = ShareDealPage;
+  cameraPageRoot: any = CameraPage;
 
   constructor() {
   }

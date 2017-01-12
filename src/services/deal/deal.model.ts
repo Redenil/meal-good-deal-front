@@ -5,6 +5,7 @@ export class DealModel {
     public location: string;
     public price: Number;
     public rate: number;
+    public fileImage: any;
 
     constructor() {
     }

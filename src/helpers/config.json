@@ -1,4 +1,6 @@
 {
-    "parseMasterKey":"raouafi23",
-    "parseServerUrl":"http://localhost:1337/parse"
+    "parseApplicationId": "meal-deal",
+    "parseMasterKey": "mealdealkey",
+    "parseServerUrl": "http://meal-deal.herokuapp.com/parse",
+    "javaScriptKey": "mealDealJsKey"
 }

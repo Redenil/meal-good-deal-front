@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
-import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms'
+import { NavController, NavParams, ToastController } from 'ionic-angular';
+// import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms'
 import { Ionic2Rating } from 'ionic2-rating';
-import { Parse } from 'parse';
 import { DealDataService } from '../../services/services'
 import { DealModel } from '../../services/models'
+import { Storage } from '@ionic/storage';
 
 
 @Component({
@@ -13,14 +13,21 @@ import { DealModel } from '../../services/models'
   providers: [DealDataService]
 })
 export class ShareDealPage {
-  public planGroup: FormGroup;
-  public rate: Number;
   public mealDeal: DealModel;
-
-  constructor(public navCtrl: NavController,
+  constructor(
+    public navCtrl: NavController,
     public navParams: NavParams,
-    private dealDataService: DealDataService) {
+    private dealDataService: DealDataService,
+    private storage: Storage,
+    private toastCtrl: ToastController) {
     this.mealDeal = new DealModel();
+    this.mealDeal.fileImage = storage.get(navParams.data);
+
+    let toast = this.toastCtrl.create({
+      message: navParams.data,
+      duration: 3000
+    });
+    toast.present();
   }
 
   ionViewDidLoad() {
@@ -28,7 +35,18 @@ export class ShareDealPage {
 
   savePlan() {
     this.dealDataService.createDeal(this.mealDeal).then(p => {
-      console.log('save ok' + p);
-    });
+      let toast = this.toastCtrl.create({
+        message: 'file saved',
+        duration: 3000
+      });
+      toast.present();
+    })
+      .catch(p => {
+        let toast = this.toastCtrl.create({
+          message: p.message,
+          duration: 3000
+        });
+        toast.present();
+      });
   }
 }

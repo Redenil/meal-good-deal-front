@@ -6,5 +6,4 @@ export class ConfigHelper {
     constructor() {      
         this.configurations = require('./config.json');
     }
-
 }
