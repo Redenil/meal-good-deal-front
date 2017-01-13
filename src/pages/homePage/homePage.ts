@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
-import { LoginPage, ShareDealPage } from '../pages';
-import { DealList } from '../../components/deal-list/deal-list';
+import { Splashscreen, NativeStorage } from 'ionic-native';
+import { LoginPage, ShareDealPage, DealsPage } from '../pages';
 
 @Component({
   selector: 'page-HomePage',
@@ -17,6 +17,15 @@ export class HomePage {
   }
 
   ionViewDidLoad() {
+    let self = this;
+    NativeStorage.getItem('twitter_user')
+      .then(function (data) {
+        self.connected = true;
+        Splashscreen.hide();
+      }, function (error) {
+        self.connected = false;
+        Splashscreen.hide();
+      });
   }
 
   newShare() {

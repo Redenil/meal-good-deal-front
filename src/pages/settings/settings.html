@@ -1,0 +1,33 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Settings</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+<ion-content padding>
+  <h1>Profile utilisateur</h1>
+  <div *ngIf="isConnected">
+    <ion-grid>
+      <ion-row>
+        <ion-col width-25>
+          <img [src]="profile.picture">
+        </ion-col>
+        <ion-col width-75>
+          <ion-item-group>
+            <ion-item>{{profile.name}}</ion-item>
+            <ion-item>{{profile.userName}}</ion-item>
+          </ion-item-group>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+    <button (click)="logout()" ion-button icon-left>
+      Logout
+    <ion-icon name="ion-log-out"></ion-icon>
+    </button>
+  </div>
+  <div *ngIf="!isConnected">
+    You are not connected
+  </div>
+</ion-content>

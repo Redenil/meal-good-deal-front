@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams, ToastController } from 'ionic-angular';
 // import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms'
-import { Ionic2Rating } from 'ionic2-rating';
 import { DealDataService } from '../../services/services'
 import { DealModel } from '../../services/models'
 import { Storage } from '@ionic/storage';
