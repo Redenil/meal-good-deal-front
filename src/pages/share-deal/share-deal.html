@@ -8,15 +8,36 @@
 
 <ion-content class="page-share-deal" padding>
   <form (ngSubmit)="savePlan()">
-    <ion-item>
-      <ion-label>Title</ion-label>
-      <ion-input type="text" [(ngModel)]="mealDeal.title" name="title">
-      </ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-label>Description</ion-label>
-      <ion-textarea [(ngModel)]="mealDeal.description" name="description"></ion-textarea>
-    </ion-item>
+    <ion-row>
+      <ion-col width-25>
+        <img [src]="mealDeal.fileImage">
+      </ion-col>
+      <ion-col width-75>
+        <ion-item>
+          <ion-label>Title</ion-label>
+          <ion-input type="text" [(ngModel)]="mealDeal.title" name="title">
+          </ion-input>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-item>
+        <ion-label>Description</ion-label>
+        <ion-textarea [(ngModel)]="mealDeal.description" name="description"></ion-textarea>
+      </ion-item>
+    </ion-row>
+    <ion-row>
+      <ion-col width-90>
+        <ion-item>
+          <ion-label>Price</ion-label>
+          <ion-input type="number" [(ngModel)]="mealDeal.price" name="price" placeholder="€">
+          </ion-input>
+        </ion-item>
+      </ion-col>
+      <ion-col width-10>
+        <ion-icon name="euro"></ion-icon>
+      </ion-col>
+    </ion-row>
     <ion-row>
       <ion-col width-90>
         <ion-item>
@@ -24,31 +45,18 @@
           <ion-textarea [(ngModel)]="mealDeal.location" name="location"></ion-textarea>
         </ion-item>
       </ion-col>
-      <ion-col width-10>
-        <ion-icon name="compass"></ion-icon>
-      </ion-col>
     </ion-row>
-    <ion-item>
-      <ion-label>Price</ion-label>
-      <ion-input type="text" [(ngModel)]="mealDeal.price" name="price">
-        <ion-icon name="pin"></ion-icon>
-      </ion-input>
-        <!--<ion-select>
-        <ion-option *ngFor="let item of pricesList" [value]="item">
-          {{item}}
-        </ion-option>
-      </ion-select>-->
-    </ion-item>
     <ion-row>
-      <ion-col width-25>
-        <ion-item>
-          <ion-label>Rate</ion-label>
-        </ion-item>
-      </ion-col>
-      <ion-col width-75>
-        <rating></rating>
-      </ion-col>
-
+      <ion-item>
+        <ion-label>Facebook</ion-label>
+        <ion-toggle class="toggle-btn" color="facebook"></ion-toggle>
+      </ion-item>
+    </ion-row>
+    <ion-row>
+      <ion-item>
+        <ion-label>Twitter</ion-label>
+        <ion-toggle class="toggle-btn" color="twitter"></ion-toggle>
+      </ion-item>
     </ion-row>
     <button ion-button full icon-right type="submit">
         Share
