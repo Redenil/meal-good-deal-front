@@ -1,9 +1,10 @@
 {
-    "Parse": {
+    "parse": {
         "parseApplicationId": "meal-deal",
         "parseMasterKey": "mealdealkey",
         "parseServerUrl": "http://mealdeal2017.herokuapp.com/parse",
-        "javaScriptKey": "mealDealJsKey"
+        "javaScriptKey": "mealDealJsKey",
+        "fileKey" : "mealdealFileKey"
     },
     "Twitter": {
         "FabricApiKey": "e7cdd7444a0425b6afa4e3db4f28e7eee3def51b"

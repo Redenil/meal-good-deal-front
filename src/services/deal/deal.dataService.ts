@@ -8,10 +8,11 @@ export class DealDataService {
     public serverApi: any;
 
     constructor(public config: ConfigHelper) {
-        Parse.initialize(config.configurations.Parse.parseApplicationId);
-        Parse.masterKey = config.configurations.Parse.parseMasterKey;
-        Parse.serverURL = config.configurations.Parse.parseServerUrl;
-        Parse.javaScriptKey = config.configurations.Parse.javaScriptKey;
+        Parse.initialize(config.configurations.parse.parseApplicationId);
+        Parse.masterKey = config.configurations.parse.parseMasterKey;
+        Parse.serverURL = config.configurations.parse.parseServerUrl;
+        Parse.javaScriptKey = config.configurations.parse.javaScriptKey;
+        Parse.fileKey = config.configurations.parse.fileKey;
     }
 
     getDeals(): Promise<Array<DealModel>> {
