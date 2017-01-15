@@ -2,7 +2,7 @@
     "Parse": {
         "parseApplicationId": "meal-deal",
         "parseMasterKey": "mealdealkey",
-        "parseServerUrl": "http://meal-deal.herokuapp.com/parse",
+        "parseServerUrl": "http://mealdeal2017.herokuapp.com/parse",
         "javaScriptKey": "mealDealJsKey"
     },
     "Twitter": {

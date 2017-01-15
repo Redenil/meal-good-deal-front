@@ -15,11 +15,11 @@ export class DealList {
     public navCtrl: NavController,
     public navParams: NavParams,
     public dealDataService: DealDataService) {
-
   }
 
   ngOnInit() {
-    
-    // this.dealDataService.getDeals().then(result => { this.deals = result; })
+    this.dealDataService.getDeals().then(result => { 
+      this.deals = result; 
+    });
   }
 }

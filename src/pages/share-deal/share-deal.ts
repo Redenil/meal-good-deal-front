@@ -20,7 +20,9 @@ export class ShareDealPage {
     private storage: Storage,
     private toastCtrl: ToastController) {
     this.mealDeal = new DealModel();
-    this.mealDeal.fileImage = storage.get(navParams.data);
+    this.storage.get(navParams.data).then((val) => {
+      this.mealDeal.fileImage = val;
+    });
 
     let toast = this.toastCtrl.create({
       message: navParams.data,

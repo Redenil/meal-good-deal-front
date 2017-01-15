@@ -10,15 +10,17 @@ import { ShareDealPage } from '../../pages/pages'
   providers: [Storage]
 })
 export class CameraPage {
+  private storage: Storage;
 
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
-    public storage: Storage) {
+    public strg: Storage) {
+    this.storage = strg;
   }
 
   ionViewDidLoad() {
-    this.storage.set('test', 'reda');
+    this.takePicture();
   }
 
   takePicture() {
@@ -32,13 +34,11 @@ export class CameraPage {
       targetHeight: 300,
       saveToPhotoAlbum: false
     };
-
+    let self = this;
     Camera.getPicture(options).then((imageData) => {
-      // imageData is either a base64 encoded string or a file URI
-      // If it's base64:
       let pictureName = 'dealPictureData';
       let base64Image = 'data:image/jpeg;base64,' + imageData;
-      this.storage.set('dealPictureData', base64Image);
+      self.storage.set('dealPictureData', base64Image);
 
       this.navCtrl.push(ShareDealPage, pictureName);
     }, (err) => {

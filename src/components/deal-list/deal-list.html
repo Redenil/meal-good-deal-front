@@ -1,8 +1,11 @@
-<ion-content padding>
+<ion-content class="card-background-page" padding>
   <ion-list>
     <ion-card *ngFor="let deal of deals, let odd=odd">
-      <img src="../../assets/img/city.png"> {{deal.title}}
-      <ion-fab right top>
+      <img [src]="deal.fileImage" />
+      <div class="card-title">{{deal.title}}</div>
+      <div class="card-subtitle">{{deal.price}}</div>
+
+      <!--<ion-fab right top>
         <button ion-fab>
       <ion-icon name="pin"></ion-icon>
         </button>
@@ -16,7 +19,7 @@
         <button ion-fab>
         <ion-icon name="usd"></ion-icon>
         </button>
-      </ion-fab>
+      </ion-fab>-->
     </ion-card>
   </ion-list>
 </ion-content>
