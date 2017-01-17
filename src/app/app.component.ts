@@ -1,6 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { Nav, Platform } from 'ionic-angular';
-import { StatusBar, Splashscreen } from 'ionic-native';
+import { StatusBar, Splashscreen, NativeStorage } from 'ionic-native';
 import { TabsPage } from '../pages/tabs/tabs';
 import { LoginPage } from '../pages/login/login';
 
@@ -9,20 +9,34 @@ import { LoginPage } from '../pages/login/login';
 })
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
-  rootPage: any = TabsPage;
+  rootPage: any = LoginPage;
 
   constructor(public platform: Platform) {
-    this.initializeApp();
+    //this.initializeApp();
     // used for an example of ngFor and navigation
-  }
-
-  initializeApp() {
+    let env = this;
     this.platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
+      NativeStorage.getItem('CurrentUser')
+      .then( function (data) {
+        // user is previously logged and we have his data
+        // we will let him access the app
+        console.log("CurrentUser : "+data.name);
+        env.nav.push(TabsPage);
+        Splashscreen.hide();
+      }, function (error) {
+        //we don't have the user data so we will ask him to log in
+        console.log(error);
+        env.nav.push(LoginPage);
+        Splashscreen.hide();
+      });
       StatusBar.styleDefault();
-      Splashscreen.hide();
     });
+  }
+
+  initializeApp() {
+
   }
 
   openPage(page) {

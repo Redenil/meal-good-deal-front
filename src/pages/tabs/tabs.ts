@@ -13,9 +13,6 @@ export class TabsPage {
   cameraPageRoot: any = CameraPage;
   settingsPageRoot: any = SettingsPage;
 
-  mySelectedIndex: number;
-
-  constructor(navParams: NavParams) {
-    this.mySelectedIndex = navParams.data.tabIndex || 0;
+  constructor() {
   }
 }

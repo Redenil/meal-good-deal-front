@@ -1,6 +1,6 @@
 import { Component, OpaqueToken, Injectable, Inject } from '@angular/core';
 import { NavController, NavParams, LoadingController } from 'ionic-angular';
-import { TwitterConnect, Facebook } from 'ionic-native';
+import { TwitterConnect, Facebook , NativeStorage} from 'ionic-native';
 import { Storage } from '@ionic/storage';
 import { APP_CONFIG_TOKEN, APP_CONFIG, ApplicationConfig } from '../../app/app-config';
 import { DealsPage } from '../pages';
@@ -16,7 +16,7 @@ export class LoginPage {
   private facebookAppId: number;
   constructor(
     public navCtrl: NavController,
-    public navParams: NavParams,
+    private navParams: NavParams,
     public loadingCtrl: LoadingController,
     private storage: Storage,
     private twitterLoginService: TwitterLoginService,
@@ -73,7 +73,8 @@ export class LoginPage {
           .then(function (user) {
             user.picture = "https://graph.facebook.com/" + userId + "/picture?type=large";
             //Save user info in the NativeStorage
-            self.storage.set('facebook_user',
+            console.log("CurrentUser : "+user.name);
+            NativeStorage.setItem('CurrentUser',
               {
                 name: user.name,
                 gender: user.gender,
