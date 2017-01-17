@@ -30,6 +30,8 @@ export class DealDataService {
                         mealDeal.location = model.location;
                         mealDeal.price = model.price;
                         mealDeal.fileImage = model.file ? model.file.url : null;
+                        mealDeal.isFacebookShared = model.isFacebookShared;
+                        mealDeal.isTwitterShared = model.isTwitterShared;
 
                         list.push(mealDeal);
                     }
@@ -51,6 +53,8 @@ export class DealDataService {
             parseObject.set("description", deal.description);
             parseObject.set("location", deal.location);
             parseObject.set("price", Number(deal.price));
+            parseObject.set("isTwitterShared", Boolean(deal.isTwitterShared));
+            parseObject.set("isFacebookShared", Boolean(deal.isFacebookShared));
 
             var parseFile = new Parse.File(deal.title + 'Picture', { base64: deal.fileImage });
             parseFile.save().then(function () {

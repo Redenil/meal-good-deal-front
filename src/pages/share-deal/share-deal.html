@@ -49,13 +49,13 @@
     <ion-row>
       <ion-item>
         <ion-label>Facebook</ion-label>
-        <ion-toggle class="toggle-btn" color="facebook"></ion-toggle>
+        <ion-toggle name="facebookShare" class="toggle-btn" [(ngModel)]="mealDeal.isFacebookShared" color="facebook"></ion-toggle>
       </ion-item>
     </ion-row>
     <ion-row>
       <ion-item>
         <ion-label>Twitter</ion-label>
-        <ion-toggle class="toggle-btn" color="twitter"></ion-toggle>
+        <ion-toggle name="twitterShare" class="toggle-btn" [(ngModel)]="mealDeal.isTwitterShared" color="twitter"></ion-toggle>
       </ion-item>
     </ion-row>
     <button ion-button full icon-right type="submit">

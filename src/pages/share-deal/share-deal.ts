@@ -13,6 +13,7 @@ import { Storage } from '@ionic/storage';
 })
 export class ShareDealPage {
   public mealDeal: DealModel;
+
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -20,6 +21,8 @@ export class ShareDealPage {
     private storage: Storage,
     private toastCtrl: ToastController) {
     this.mealDeal = new DealModel();
+    this.mealDeal.isTwitterShared = false;
+    this.mealDeal.isFacebookShared = false;
     this.storage.get(navParams.data).then((val) => {
       this.mealDeal.fileImage = val;
     });
@@ -49,5 +52,9 @@ export class ShareDealPage {
         });
         toast.present();
       });
+  }
+
+  updateToggleStatus(target) {
+    this.mealDeal.isFacebookShared = !this.mealDeal.isFacebookShared;
   }
 }

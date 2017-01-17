@@ -6,6 +6,8 @@ export class DealModel {
     public price: Number;
     public rate: number;
     public fileImage: any;
+    public isFacebookShared: boolean;
+    public isTwitterShared: boolean;
 
     constructor() {
     }
