@@ -44,4 +44,5 @@
         <variable name="APP_ID" value="1850142861926360" />
         <variable name="APP_NAME" value="firstApp11245117" />
     </plugin>
+    <plugin name="cordova-plugin-camera" spec="~2.3.1" />
 </widget>
