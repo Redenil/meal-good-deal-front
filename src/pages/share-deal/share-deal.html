@@ -22,29 +22,25 @@
     </ion-row>
     <ion-row>
       <ion-item>
+        <ion-icon name="paper" item-left></ion-icon>
         <ion-label>Description</ion-label>
         <ion-textarea [(ngModel)]="mealDeal.description" name="description"></ion-textarea>
       </ion-item>
     </ion-row>
     <ion-row>
-      <ion-col width-90>
-        <ion-item>
-          <ion-label>Price</ion-label>
-          <ion-input type="number" [(ngModel)]="mealDeal.price" name="price" placeholder="€">
-          </ion-input>
-        </ion-item>
-      </ion-col>
-      <ion-col width-10>
-        <ion-icon name="euro"></ion-icon>
-      </ion-col>
+      <ion-item>
+        <ion-icon name="logo-euro" item-left></ion-icon>
+        <ion-label>Price</ion-label>
+        <ion-input type="number" [(ngModel)]="mealDeal.price" name="price">
+        </ion-input>
+      </ion-item>
     </ion-row>
     <ion-row>
-      <ion-col width-90>
-        <ion-item>
-          <ion-label>Location</ion-label>
-          <ion-textarea [(ngModel)]="mealDeal.location" name="location"></ion-textarea>
-        </ion-item>
-      </ion-col>
+      <ion-item>
+        <ion-icon name="pin" item-left></ion-icon>
+        <ion-label>Location</ion-label>
+        <ion-textarea [(ngModel)]="mealDeal.location" name="location"></ion-textarea>
+      </ion-item>
     </ion-row>
     <ion-row>
       <ion-item>

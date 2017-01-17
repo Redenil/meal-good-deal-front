@@ -44,6 +44,40 @@ export class DealDataService {
         });
     }
 
+    searchDeals(searchTerm: string): Promise<Array<DealModel>> {
+        let list = new Array<DealModel>();
+        let titleQuery = new Parse.Query('MealDeal');
+        titleQuery.contains("title", searchTerm);
+
+        let descriptionQuery = new Parse.Query('MealDeal');
+        descriptionQuery.contains("description", searchTerm);
+        var mainQuery = Parse.Query.or(titleQuery, descriptionQuery);
+        mainQuery.include('file');
+        return new Promise(function (resolve, reject) {
+            mainQuery.find({
+                success: function (results) {
+                    for (var i = 0; i < results.length; i++) {
+                        var model = results[i].toJSON();
+                        var mealDeal = new DealModel();
+                        mealDeal.title = model.title;
+                        mealDeal.description = model.description;
+                        mealDeal.location = model.location;
+                        mealDeal.price = model.price;
+                        mealDeal.fileImage = model.file ? model.file.url : null;
+                        mealDeal.isFacebookShared = model.isFacebookShared;
+                        mealDeal.isTwitterShared = model.isTwitterShared;
+
+                        list.push(mealDeal);
+                    }
+                    resolve(list);
+                },
+                error: function (error) {
+                    reject();
+                }
+            });
+        });
+    }
+
     createDeal(deal: DealModel): Promise<boolean> {
         let MealDeal = Parse.Object.extend("MealDeal");
         let parseObject = new MealDeal();

@@ -1,11 +1,28 @@
 <ion-header>
   <ion-navbar hideBackButton="true">
-    <ion-title>Meal deals</ion-title>
+    <ion-title *ngIf="!inSearch">Meal deals</ion-title>
+    <ion-buttons *ngIf="!inSearch" end>
+      <button ion-button ion-icon type="search" (click)="inSearch = !inSearch">
+        <ion-icon name="search"></ion-icon>
+      </button>
+      <button ion-button icon-only (click)="presentFilter()">
+        <ion-icon ios="ios-options-outline" md="md-options"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-toolbar *ngIf="inSearch" no-border-top>
+      <ion-searchbar color="primary" placeholder="Search" [(ngModel)]="searchTerm" (ionInput)="applySearch()">
+      </ion-searchbar>
+      <ion-buttons end>
+        <button ion-button ion-icon type="button" (click)="inSearch = !inSearch">
+        <ion-icon name="close"></ion-icon>
+      </button>
+      </ion-buttons>
+    </ion-toolbar>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding>
   <p>This is deals</p>
-  <deal-list>
+  <deal-list [deals]="deals">
   </deal-list>
 </ion-content>

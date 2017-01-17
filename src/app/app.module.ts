@@ -2,7 +2,7 @@ import { NgModule, ErrorHandler } from '@angular/core';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
 import { ConfigHelper } from '../helpers/configHelper';
-import { HomePage, ShareDealPage, LoginPage, CameraPage, DealsPage, SettingsPage } from '../pages/pages';
+import { HomePage, ShareDealPage, LoginPage, CameraPage, DealsPage, SettingsPage, DealFiltersPage } from '../pages/pages';
 import { Ionic2Rating } from 'ionic2-rating';
 import { DealList } from '../components/deal-list/deal-list';
 import { TabsPage } from '../pages/tabs/tabs';
@@ -20,7 +20,8 @@ import { Storage } from '@ionic/storage';
     CameraPage,
     TabsPage,
     DealsPage,
-    SettingsPage
+    SettingsPage,
+    DealFiltersPage
   ],
   imports: [
     IonicModule.forRoot(MyApp)
@@ -35,7 +36,8 @@ import { Storage } from '@ionic/storage';
     CameraPage,
     TabsPage,
     DealsPage,
-    SettingsPage
+    SettingsPage,
+    DealFiltersPage
   ],
   providers: [
     {

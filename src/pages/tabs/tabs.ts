@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-
+import { NavParams } from 'ionic-angular';
 import { HomePage, ShareDealPage, CameraPage, SettingsPage } from '../pages';
 
 @Component({
@@ -13,6 +13,9 @@ export class TabsPage {
   cameraPageRoot: any = CameraPage;
   settingsPageRoot: any = SettingsPage;
 
-  constructor() {
+  mySelectedIndex: number;
+
+  constructor(navParams: NavParams) {
+    this.mySelectedIndex = navParams.data.tabIndex || 0;
   }
 }

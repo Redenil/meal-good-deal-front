@@ -10,21 +10,19 @@ import { LoginPage, ShareDealPage, DealsPage } from '../pages';
 })
 export class HomePage {
   public connected: boolean;
-  public inSearch: boolean;
 
   constructor(private navCtrl: NavController,
     private storage: Storage) {
     this.connected = false;
-    this.inSearch = false;
   }
 
   ionViewWillEnter() {
     let self = this;
     self.storage.get('CurrentUser')
-      .then(function (data) {
+      .then((data) => {
         self.connected = true;
         Splashscreen.hide();
-      }, function (error) {
+      }).catch((error) => {
         self.connected = false;
         Splashscreen.hide();
       });
@@ -32,8 +30,5 @@ export class HomePage {
 
   newShare() {
     this.navCtrl.push(ShareDealPage);
-  }
-
-  launchSearch() {
   }
 }

@@ -19,7 +19,7 @@ export class CameraPage {
     this.storage = strg;
   }
 
-  ionViewDidLoad() {
+  ionViewWillEnter() {
     this.takePicture();
   }
 
@@ -38,9 +38,10 @@ export class CameraPage {
     Camera.getPicture(options).then((imageData) => {
       let pictureName = 'dealPictureData';
       let base64Image = 'data:image/jpeg;base64,' + imageData;
-      self.storage.set('dealPictureData', base64Image);
+      self.storage.set(pictureName, base64Image).then(() => {
+        this.navCtrl.push(ShareDealPage, pictureName);
+      });
 
-      this.navCtrl.push(ShareDealPage, pictureName);
     }, (err) => {
       // Handle error
     });

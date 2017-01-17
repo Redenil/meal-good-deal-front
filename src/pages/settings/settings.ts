@@ -38,9 +38,10 @@ export class SettingsPage {
 
   logout() {
     let self = this;
-    self.twitterLoginService.logout().then(function () {
-      self.storage.remove('CurrentUser');
-      self.isConnected = false;
+    self.twitterLoginService.logout().then(() => {
+      self.storage.remove('CurrentUser').then(() => {
+        self.isConnected = false
+      });
     });
   }
 }

@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, Input, Inject } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { DealDataService } from '../../services/services'
+import { DealModel } from '../../services/models';
 
 
 @Component({
@@ -9,17 +10,10 @@ import { DealDataService } from '../../services/services'
   providers: [DealDataService]
 })
 export class DealList {
-  public deals = [];
-
+  @Input() deals: Array<DealModel>;
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
     public dealDataService: DealDataService) {
-  }
-
-  ngOnInit() {
-    this.dealDataService.getDeals().then(result => { 
-      this.deals = result; 
-    });
   }
 }

@@ -40,7 +40,7 @@ export class ShareDealPage {
   savePlan() {
     this.dealDataService.createDeal(this.mealDeal).then(p => {
       let toast = this.toastCtrl.create({
-        message: 'file saved',
+        message: 'Deal shared',
         duration: 3000
       });
       toast.present();
@@ -52,9 +52,5 @@ export class ShareDealPage {
         });
         toast.present();
       });
-  }
-
-  updateToggleStatus(target) {
-    this.mealDeal.isFacebookShared = !this.mealDeal.isFacebookShared;
   }
 }
