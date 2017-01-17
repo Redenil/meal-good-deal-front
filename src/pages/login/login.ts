@@ -1,13 +1,16 @@
-import { Component ,OpaqueToken, Injectable, Inject} from '@angular/core';
+import { Component, OpaqueToken, Injectable, Inject } from '@angular/core';
 import { NavController, NavParams, LoadingController } from 'ionic-angular';
-import { NativeStorage, TwitterConnect, Facebook } from 'ionic-native';
+import { TwitterConnect, Facebook } from 'ionic-native';
+import { Storage } from '@ionic/storage';
 import { APP_CONFIG_TOKEN, APP_CONFIG, ApplicationConfig } from '../../app/app-config';
 import { DealsPage } from '../pages';
+import { TwitterLoginService } from '../../services/services'
+import { UserProfile, ProfileType } from '../../services/models'
 
 @Component({
   selector: 'page-login',
   templateUrl: 'login.html',
-  providers: [{ provide: APP_CONFIG_TOKEN, useValue: APP_CONFIG }]
+  providers: [{ provide: APP_CONFIG_TOKEN, useValue: APP_CONFIG }, TwitterLoginService]
 })
 export class LoginPage {
   private facebookAppId: number;
@@ -15,44 +18,41 @@ export class LoginPage {
     public navCtrl: NavController,
     public navParams: NavParams,
     public loadingCtrl: LoadingController,
+    private storage: Storage,
+    private twitterLoginService: TwitterLoginService,
     @Inject(APP_CONFIG_TOKEN) config: ApplicationConfig) {
-      Facebook.browserInit(config.facebookAppId, "v2.8");
-    }
+    Facebook.browserInit(config.facebookAppId, "v2.8");
+  }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad LoginPage');
   }
 
   loginTwitter() {
+    let self = this;
     let nav = this.navCtrl;
     let loading = this.loadingCtrl.create({
       content: 'Please wait...'
     });
 
     loading.present();
-
-    //Request for login
-    TwitterConnect.login().then(function (result) {
-      //Get user data
-      TwitterConnect.showUser().then(function (user) {
-        //Save the user data in NativeStorage
-        NativeStorage.setItem('twitter_user',
-          {
-            name: user.name,
-            userName: user.screen_name,
-            followers: user.followers_count,
-            picture: user.profile_image_url_https
-          }).then(function () {
+    this.twitterLoginService.login().then(function (user) {
+      self.storage.set('CurrentUser',
+        new UserProfile(
+          user.name,
+          user.screen_name,
+          user.profile_image_url,
+          ProfileType.Twitter)).then(function () {
             loading.dismiss();
             nav.push(DealsPage);
-          })
-      }, function (error) {
-        loading.dismiss();
-      });
+          });
+    }).catch(function () {
+      loading.dismiss();
     });
   }
 
-  loginFacebook(){
+  loginFacebook() {
+    let self = this;
     let nav = this.navCtrl;
     let loading = this.loadingCtrl.create({
       content: 'Please wait...'
@@ -65,31 +65,31 @@ export class LoginPage {
     //Facebook permission that app need
     permissions = ["public_profile"];
     Facebook.login(permissions)
-    .then(function(response){
-      let userId = response.authResponse.userID;
-      let params = new Array<string>();
-      //Getting name and gender properties
-      Facebook.api("/me?fields=name,gender", params)
-      .then(function(user) {
-        user.picture = "https://graph.facebook.com/" + userId + "/picture?type=large";
-        //Save user info in the NativeStorage
-        NativeStorage.setItem('facebook_user',
-        {
-          name: user.name,
-          gender: user.gender,
-          picture: user.picture
-        })
-        .then(function(){
-          loading.dismiss();
-          nav.push(DealsPage);
-        }, function (error) {
-          console.log(error);
-          loading.dismiss();
-        })
-      })
-    }, function(error){
-      console.log(error);
-      loading.dismiss();
-    });
+      .then(function (response) {
+        let userId = response.authResponse.userID;
+        let params = new Array<string>();
+        //Getting name and gender properties
+        Facebook.api("/me?fields=name,gender", params)
+          .then(function (user) {
+            user.picture = "https://graph.facebook.com/" + userId + "/picture?type=large";
+            //Save user info in the NativeStorage
+            self.storage.set('facebook_user',
+              {
+                name: user.name,
+                gender: user.gender,
+                picture: user.picture
+              })
+              .then(function () {
+                loading.dismiss();
+                nav.push(DealsPage);
+              }, function (error) {
+                console.log(error);
+                loading.dismiss();
+              })
+          })
+      }, function (error) {
+        console.log(error);
+        loading.dismiss();
+      });
   }
 }

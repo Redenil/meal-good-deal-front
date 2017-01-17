@@ -1,30 +1,35 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
-import { NativeStorage, TwitterConnect } from 'ionic-native';
+import { TwitterConnect } from 'ionic-native';
 import { UserProfile, ProfileType } from '../../services/models';
+import { Storage } from '@ionic/storage';
+import { TwitterLoginService } from '../../services/services'
 
 @Component({
   selector: 'page-settings',
-  templateUrl: 'settings.html'
+  templateUrl: 'settings.html',
+  providers: [TwitterLoginService]
 })
 export class SettingsPage {
   public profile: UserProfile;
   public isConnected: boolean;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController,
+    public navParams: NavParams,
+    public storage: Storage,
+    public twitterLoginService: TwitterLoginService) {
     this.profile = new UserProfile();
     this.isConnected = false;
   }
 
   ionViewWillEnter() {
     let self = this;
-    NativeStorage.getItem('twitter_user')
+    self.storage.get('CurrentUser')
       .then(function (data) {
         self.profile.name = data.name;
         self.profile.userName = data.userName;
         self.profile.picture = data.picture;
-        self.profile.profileType = ProfileType.Twitter;
-
+        self.profile.profileType = data.profileType;
         self.isConnected = true;
       }, function (error) {
         console.log('twitter not connected');
@@ -33,11 +38,9 @@ export class SettingsPage {
 
   logout() {
     let self = this;
-    TwitterConnect.logout().then(function (response) {
-      NativeStorage.remove('twitter_user');
+    self.twitterLoginService.logout().then(function () {
+      self.storage.remove('CurrentUser');
       self.isConnected = false;
-    }, function (error) {
-      console.log(error);
     });
   }
 }

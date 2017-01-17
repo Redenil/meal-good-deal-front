@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
-import { Splashscreen, NativeStorage } from 'ionic-native';
+import { Splashscreen } from 'ionic-native';
+import { Storage } from '@ionic/storage';
 import { LoginPage, ShareDealPage, DealsPage } from '../pages';
 
 @Component({
@@ -11,14 +12,15 @@ export class HomePage {
   public connected: boolean;
   public inSearch: boolean;
 
-  constructor(private navCtrl: NavController) {
+  constructor(private navCtrl: NavController,
+    private storage: Storage) {
     this.connected = false;
     this.inSearch = false;
   }
 
-  ionViewDidLoad() {
+  ionViewWillEnter() {
     let self = this;
-    NativeStorage.getItem('twitter_user')
+    self.storage.get('CurrentUser')
       .then(function (data) {
         self.connected = true;
         Splashscreen.hide();
