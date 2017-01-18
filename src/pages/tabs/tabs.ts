@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NavParams } from 'ionic-angular';
-import { HomePage, ShareDealPage, CameraPage, SettingsPage } from '../pages';
-
+import { HomePage, ShareDealPage, CameraPage } from '../pages';
+import { SettingsPage } from '../settings/settings';
 @Component({
   templateUrl: 'tabs.html'
 })

@@ -3,7 +3,7 @@ import { NavController, NavParams, LoadingController } from 'ionic-angular';
 import { TwitterConnect, Facebook , NativeStorage} from 'ionic-native';
 import { Storage } from '@ionic/storage';
 import { APP_CONFIG_TOKEN, APP_CONFIG, ApplicationConfig } from '../../app/app-config';
-import { DealsPage } from '../pages';
+import { TabsPage } from '../tabs/tabs';
 import { TwitterLoginService } from '../../services/services'
 import { UserProfile, ProfileType } from '../../services/models'
 
@@ -44,7 +44,7 @@ export class LoginPage {
           user.profile_image_url,
           ProfileType.Twitter)).then(function () {
             loading.dismiss();
-            nav.push(DealsPage);
+            nav.push(TabsPage);
           });
     }).catch(function () {
       loading.dismiss();
@@ -82,7 +82,7 @@ export class LoginPage {
               })
               .then(function () {
                 loading.dismiss();
-                nav.push(DealsPage);
+                nav.push(TabsPage);
               }, function (error) {
                 console.log(error);
                 loading.dismiss();

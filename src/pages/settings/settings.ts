@@ -1,9 +1,9 @@
-import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
-import { TwitterConnect } from 'ionic-native';
+import { Component, ViewChild } from '@angular/core';
+import { Nav,NavController, NavParams} from 'ionic-angular';
+import { TwitterConnect, NativeStorage } from 'ionic-native';
 import { UserProfile, ProfileType } from '../../services/models';
-import { Storage } from '@ionic/storage';
 import { TwitterLoginService } from '../../services/services'
+import { LoginPage } from '../login/login';
 
 @Component({
   selector: 'page-settings',
@@ -11,12 +11,12 @@ import { TwitterLoginService } from '../../services/services'
   providers: [TwitterLoginService]
 })
 export class SettingsPage {
+  @ViewChild(Nav) nav: Nav;
   public profile: UserProfile;
   public isConnected: boolean;
 
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
-    public storage: Storage,
     public twitterLoginService: TwitterLoginService) {
     this.profile = new UserProfile();
     this.isConnected = false;
@@ -24,7 +24,7 @@ export class SettingsPage {
 
   ionViewWillEnter() {
     let self = this;
-    self.storage.get('CurrentUser')
+    NativeStorage.getItem('CurrentUser')
       .then(function (data) {
         self.profile.name = data.name;
         self.profile.userName = data.userName;
@@ -38,10 +38,12 @@ export class SettingsPage {
 
   logout() {
     let self = this;
-    self.twitterLoginService.logout().then(() => {
-      self.storage.remove('CurrentUser').then(() => {
-        self.isConnected = false
-      });
+    let nav = this.navCtrl;
+    NativeStorage.remove('CurrentUser').then(function () {
+      nav.setRoot(LoginPage);
+    }, function (error) {
+      console.log(error);
     });
+    //logout Facebook or Twitter
   }
 }
