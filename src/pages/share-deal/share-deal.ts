@@ -1,9 +1,11 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, ToastController } from 'ionic-angular';
+import { NavController, NavParams, ToastController, ModalController } from 'ionic-angular';
 // import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms'
 import { DealDataService } from '../../services/services'
 import { DealModel } from '../../services/models'
 import { Storage } from '@ionic/storage';
+
+import { AutocompletePage } from '../autocomplete/autocomplete'
 
 
 @Component({
@@ -19,10 +21,13 @@ export class ShareDealPage {
     public navParams: NavParams,
     private dealDataService: DealDataService,
     private storage: Storage,
-    private toastCtrl: ToastController) {
+    private toastCtrl: ToastController,
+    private modalCtrl: ModalController) {
     this.mealDeal = new DealModel();
     this.mealDeal.isTwitterShared = false;
     this.mealDeal.isFacebookShared = false;
+    this.mealDeal.location = '';
+
     this.storage.get(navParams.data).then((val) => {
       this.mealDeal.fileImage = val;
     });
@@ -52,5 +57,14 @@ export class ShareDealPage {
         });
         toast.present();
       });
+  }
+
+  showAddressModal() {
+    let modal = this.modalCtrl.create(AutocompletePage);
+    let self = this;
+    modal.onDidDismiss(data => {
+      self.mealDeal.location = data;
+    });
+    modal.present();
   }
 }

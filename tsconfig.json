@@ -12,15 +12,20 @@
     "moduleResolution": "node",
     "sourceMap": true,
     "target": "es5",
-    "types": ["node"]
+    "types": [
+      "node"
+    ]
   },
   "include": [
     "src/**/*.ts",
-    "src/**/*.png", 
-    "src/**/*.json"
+    "src/**/*.png",
+    "src/**/*.json",
+    "typings/*.d.ts"
   ],
   "exclude": [
-    "node_modules"
+    "node_modules",
+    "typings/global",
+    "typings/global.d.ts"
   ],
   "compileOnSave": false,
   "atom": {

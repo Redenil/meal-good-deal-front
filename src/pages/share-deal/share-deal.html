@@ -39,7 +39,7 @@
       <ion-item>
         <ion-icon name="pin" item-left></ion-icon>
         <ion-label>Location</ion-label>
-        <ion-textarea [(ngModel)]="mealDeal.location" name="location"></ion-textarea>
+        <ion-input name="location" [(ngModel)]="mealDeal.location" (change)="showAddressModal()" type="text" placeholder="Pick an address"></ion-input>
       </ion-item>
     </ion-row>
     <ion-row>
