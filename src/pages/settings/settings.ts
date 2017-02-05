@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { Nav,NavController, NavParams} from 'ionic-angular';
+import { Nav,NavController, NavParams,App} from 'ionic-angular';
 import { TwitterConnect, NativeStorage } from 'ionic-native';
 import { UserProfile, ProfileType } from '../../services/models';
 import { TwitterLoginService } from '../../services/services'
@@ -11,11 +11,11 @@ import { LoginPage } from '../login/login';
   providers: [TwitterLoginService]
 })
 export class SettingsPage {
-  @ViewChild(Nav) nav: Nav;
   public profile: UserProfile;
   public isConnected: boolean;
 
-  constructor(public navCtrl: NavController,
+  constructor(private app: App,
+    private navCtrl: NavController,
     public navParams: NavParams,
     public twitterLoginService: TwitterLoginService) {
     this.profile = new UserProfile();
@@ -37,13 +37,8 @@ export class SettingsPage {
   }
 
   logout() {
-    let self = this;
-    let nav = this.navCtrl;
-    NativeStorage.remove('CurrentUser').then(function () {
-      nav.setRoot(LoginPage);
-    }, function (error) {
-      console.log(error);
-    });
-    //logout Facebook or Twitter
+    NativeStorage.remove('CurrentUser');
+    const root = this.app.getRootNav();
+    root.popToRoot();
   }
 }

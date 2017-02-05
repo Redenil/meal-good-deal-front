@@ -15,12 +15,13 @@ import { UserProfile, ProfileType } from '../../services/models'
 export class LoginPage {
   private facebookAppId: number;
   constructor(
-    public navCtrl: NavController,
+    private navCtrl: NavController,
     private navParams: NavParams,
-    public loadingCtrl: LoadingController,
+    private loadingCtrl: LoadingController,
     private storage: Storage,
     private twitterLoginService: TwitterLoginService,
     @Inject(APP_CONFIG_TOKEN) config: ApplicationConfig) {
+    console.log('constructor LoginPage');
     Facebook.browserInit(config.facebookAppId, "v2.8");
   }
 
