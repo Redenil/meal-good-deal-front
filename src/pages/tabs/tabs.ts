@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { NavParams } from 'ionic-angular';
-import { HomePage, FavoritesPage, CameraPage, SettingsPage } from '../pages';
+import { NavParams, NavController } from 'ionic-angular';
+import { HomePage, FavoritesPage, ShareDealPage, SettingsPage } from '../pages';
 
 @Component({
   templateUrl: 'tabs.html'
@@ -10,7 +10,7 @@ export class TabsPage {
   // should be each tab's root Page
   homePageRoot: any = HomePage;
   favoritesDealRoot: any = FavoritesPage;
-  cameraPageRoot: any = CameraPage;
+  shareDealPageRoot: any = ShareDealPage;
   settingsPageRoot: any = SettingsPage;
 
   constructor() {

@@ -1,7 +1,10 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>Share deal</ion-title>
+    <ion-item>
+      <ion-icon name="restaurant" item-left></ion-icon>
+      <ion-title>New deal</ion-title>
+    </ion-item>
   </ion-navbar>
 
 </ion-header>
@@ -10,7 +13,10 @@
   <form (ngSubmit)="savePlan()">
     <ion-row>
       <ion-col width-25>
-        <img [src]="mealDeal.fileImage">
+        <img *ngIf="mealDeal.fileImage != null" [src]="mealDeal.fileImage" (click)="takePicture()">
+        <button *ngIf="mealDeal.fileImage == null" ion-button icon-only>
+          <ion-icon name="image"></ion-icon>
+        </button>
       </ion-col>
       <ion-col width-75>
         <ion-item>
