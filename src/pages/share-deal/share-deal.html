@@ -14,8 +14,7 @@
       </ion-col>
       <ion-col width-75>
         <ion-item>
-          <ion-label>Title</ion-label>
-          <ion-input type="text" [(ngModel)]="mealDeal.title" name="title">
+          <ion-input type="text" [(ngModel)]="mealDeal.title" name="title" placeholder="title">
           </ion-input>
         </ion-item>
       </ion-col>
@@ -23,22 +22,19 @@
     <ion-row>
       <ion-item>
         <ion-icon name="paper" item-left></ion-icon>
-        <ion-label>Description</ion-label>
-        <ion-textarea [(ngModel)]="mealDeal.description" name="description"></ion-textarea>
+        <ion-textarea [(ngModel)]="mealDeal.description" name="description" placeholder="description"></ion-textarea>
       </ion-item>
     </ion-row>
     <ion-row>
       <ion-item>
         <ion-icon name="logo-euro" item-left></ion-icon>
-        <ion-label>Price</ion-label>
-        <ion-input type="number" [(ngModel)]="mealDeal.price" name="price">
+        <ion-input type="number" [(ngModel)]="mealDeal.price" name="price" placeholder="price">
         </ion-input>
       </ion-item>
     </ion-row>
     <ion-row>
       <ion-item>
         <ion-icon name="pin" item-left></ion-icon>
-        <ion-label>Location</ion-label>
         <ion-input name="location" [(ngModel)]="mealDeal.location" (change)="showAddressModal()" type="text" placeholder="Pick an address"></ion-input>
       </ion-item>
     </ion-row>

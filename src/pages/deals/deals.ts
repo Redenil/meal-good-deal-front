@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, ModalController } from 'ionic-angular';
+import { NavController, NavParams, ModalController, LoadingController } from 'ionic-angular';
 import { DealList } from '../../components/deal-list/deal-list';
 import { DealFiltersPage } from '../deal-filters/deal-filters'
 import { DealDataService } from '../../services/services'
@@ -18,13 +18,19 @@ export class DealsPage {
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
     public modalCtrl: ModalController,
-    public dealDataService: DealDataService) {
+    public dealDataService: DealDataService,
+    public loadingCtrl: LoadingController) {
     this.inSearch = false;
   }
 
   ngOnInit() {
     let self = this;
+    let loader = this.loadingCtrl.create({
+      content: "Please wait while fetching deals..."
+    });
+    loader.present();
     this.dealDataService.getDeals().then(result => {
+      loader.dismiss();
       self.deals = result;
     });
   }

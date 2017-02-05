@@ -1,7 +1,6 @@
 import { Component, OpaqueToken, Injectable, Inject } from '@angular/core';
 import { NavController, NavParams, LoadingController } from 'ionic-angular';
 import { TwitterConnect, Facebook , NativeStorage} from 'ionic-native';
-import { Storage } from '@ionic/storage';
 import { APP_CONFIG_TOKEN, APP_CONFIG, ApplicationConfig } from '../../app/app-config';
 import { TabsPage } from '../tabs/tabs';
 import { TwitterLoginService } from '../../services/services'
@@ -38,7 +37,7 @@ export class LoginPage {
 
     loading.present();
     this.twitterLoginService.login().then(function (user) {
-      self.storage.set('CurrentUser',
+      NativeStorage.setItem('CurrentUser',
         new UserProfile(
           user.name,
           user.screen_name,

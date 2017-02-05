@@ -31,12 +31,6 @@ export class ShareDealPage {
     this.storage.get(navParams.data).then((val) => {
       this.mealDeal.fileImage = val;
     });
-
-    let toast = this.toastCtrl.create({
-      message: navParams.data,
-      duration: 3000
-    });
-    toast.present();
   }
 
   ionViewDidLoad() {
@@ -45,7 +39,7 @@ export class ShareDealPage {
   savePlan() {
     this.dealDataService.createDeal(this.mealDeal).then(p => {
       let toast = this.toastCtrl.create({
-        message: 'Deal shared',
+        message: 'Your deal has been shared',
         duration: 3000
       });
       toast.present();
