@@ -17,7 +17,6 @@ export class LoginPage {
     private navCtrl: NavController,
     private navParams: NavParams,
     private loadingCtrl: LoadingController,
-    private storage: Storage,
     private twitterLoginService: TwitterLoginService,
     @Inject(APP_CONFIG_TOKEN) config: ApplicationConfig) {
     console.log('constructor LoginPage');
