@@ -1,7 +1,6 @@
 export * from './homePage/homePage'
 export * from './share-deal/share-deal'
 export * from './login/login'
-export * from './camera/camera'
 export * from './deals/deals'
 export * from './settings/settings'
 export * from './deal-filters/deal-filters'

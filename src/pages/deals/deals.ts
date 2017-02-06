@@ -21,6 +21,7 @@ export class DealsPage {
     public dealDataService: DealDataService,
     public loadingCtrl: LoadingController) {
     this.inSearch = false;
+    this.searchTerm = '';
   }
 
   ngOnInit() {
