@@ -8,26 +8,47 @@
 
 <ion-content padding>
   <h1>Profile utilisateur</h1>
-  <div *ngIf="isConnected">
+  <div>
     <ion-grid>
       <ion-row>
-        <ion-col width-25>
-          <img [src]="profile.picture">
-        </ion-col>
-        <ion-col width-75>
-          <ion-item-group>
-            <ion-item>{{profile.name}}</ion-item>
-            <ion-item>{{profile.userName}}</ion-item>
-          </ion-item-group>
+        <ion-col text-center>
+            <img [src]="profile.picture">
         </ion-col>
       </ion-row>
+      <ion-row>
+        <ion-col text-center>
+            {{profile.userName}}
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col width-50 text-right>
+            1 stat
+        </ion-col>
+        <ion-col width-50 text-left>
+            2 stat
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col width-33 text-center class="section1">
+            1
+        </ion-col>
+        <ion-col width-33 text-center class="section2">
+            2
+        </ion-col>
+        <ion-col width-33 text-center class="section3">
+            3
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <button ion-button block (click)="edit()" style="text-transform: none;">Editer mon profil</button>
+      </ion-row>
+      <ion-row>
+        <button ion-button block (click)="logout()" style="text-transform: none;">
+          <!--<ion-icon name="cog"></ion-icon>-->
+          Logout
+        </button>
+      </ion-row>
     </ion-grid>
-    <button (click)="logout()" ion-button icon-left>
-      Logout
-    <ion-icon name="ion-log-out"></ion-icon>
-    </button>
   </div>
-  <div *ngIf="!isConnected">
-    You are not connected
-  </div>
-</ion-content>
