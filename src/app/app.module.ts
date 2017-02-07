@@ -2,8 +2,7 @@ import { NgModule, ErrorHandler } from '@angular/core';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
 import { ConfigHelper } from '../helpers/configHelper';
-import { HomePage, ShareDealPage, LoginPage, DealsPage, SettingsPage, DealFiltersPage, FavoritesPage, AutocompletePage, EditProfile } from '../pages/pages';
-import { HomePage, DealDetailPage, ShareDealPage, LoginPage, DealsPage, SettingsPage, DealFiltersPage, FavoritesPage, AutocompletePage } from '../pages/pages';
+import { HomePage, DealDetailPage, ShareDealPage, LoginPage, DealsPage, SettingsPage, DealFiltersPage, FavoritesPage, AutocompletePage, EditProfile } from '../pages/pages';
 import { Ionic2Rating } from 'ionic2-rating';
 import { DealList } from '../components/deal-list/deal-list';
 import { TabsPage } from '../pages/tabs/tabs';
@@ -26,8 +25,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     DealFiltersPage,
     FavoritesPage,
     AutocompletePage,
-    EditProfile
-    AutocompletePage,
+    EditProfile,
     NearbyMapPage,
     DealDetailPage
   ],
@@ -48,8 +46,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     DealFiltersPage,
     FavoritesPage,
     AutocompletePage,
-    EditProfile
-    AutocompletePage,
+    EditProfile,
     NearbyMapPage,
     DealDetailPage
   ],
