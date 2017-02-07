@@ -3,10 +3,12 @@ import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
 import { ConfigHelper } from '../helpers/configHelper';
 import { HomePage, ShareDealPage, LoginPage, DealsPage, SettingsPage, DealFiltersPage, FavoritesPage, AutocompletePage, EditProfile } from '../pages/pages';
+import { HomePage, DealDetailPage, ShareDealPage, LoginPage, DealsPage, SettingsPage, DealFiltersPage, FavoritesPage, AutocompletePage } from '../pages/pages';
 import { Ionic2Rating } from 'ionic2-rating';
 import { DealList } from '../components/deal-list/deal-list';
 import { TabsPage } from '../pages/tabs/tabs';
-import { DealDataService } from '../services/services';
+import { NearbyMapPage } from '../modals/modals';
+import { DealDataService, MapsDataService } from '../services/services';
 import { Storage } from '@ionic/storage';
 import { ReactiveFormsModule } from '@angular/forms';
 
@@ -25,6 +27,9 @@ import { ReactiveFormsModule } from '@angular/forms';
     FavoritesPage,
     AutocompletePage,
     EditProfile
+    AutocompletePage,
+    NearbyMapPage,
+    DealDetailPage
   ],
   imports: [
     ReactiveFormsModule,
@@ -44,6 +49,9 @@ import { ReactiveFormsModule } from '@angular/forms';
     FavoritesPage,
     AutocompletePage,
     EditProfile
+    AutocompletePage,
+    NearbyMapPage,
+    DealDetailPage
   ],
   providers: [
     {
@@ -52,6 +60,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     },
     Storage,
     ConfigHelper,
-    DealDataService]
+    DealDataService,
+    MapsDataService]
 })
 export class AppModule { }

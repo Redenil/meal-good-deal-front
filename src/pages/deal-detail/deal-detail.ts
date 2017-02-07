@@ -2,23 +2,18 @@ import { Component, Input, Inject } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { DealDataService } from '../../services/services'
 import { DealModel } from '../../services/models';
-import { DealDetailPage } from '../../pages/pages';
 
 
 @Component({
-  selector: 'deal-list',
-  templateUrl: 'deal-list.html',
-  providers: [DealDataService]
+  selector: 'deal-detail',
+  templateUrl: 'deal-detail.html'
 })
-export class DealList {
-  @Input() deals: Array<DealModel>;
+export class DealDetailPage {
+  deal: DealModel;
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
     public dealDataService: DealDataService) {
-  }
-
-  showDealDetail(deal){
-    this.navCtrl.push(DealDetailPage, deal);
+      this.deal = this.navParams.data;
   }
 }

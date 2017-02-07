@@ -39,10 +39,21 @@
       </ion-item>
     </ion-row>
     <ion-row>
-      <ion-item>
-        <ion-icon name="pin" item-left></ion-icon>
-        <ion-input name="location" [(ngModel)]="mealDeal.location" (change)="showAddressModal()" type="text" placeholder="Pick an address"></ion-input>
-      </ion-item>
+      <ion-col width-33>
+        <ion-item>
+          <button type="button" (click)="enableNearBySearch()" ion-button icon-only item-left>
+          <ion-icon name="locate"></ion-icon>
+        </button>
+          <button type="button" (click)="enableLocationSearch()" ion-button icon-only item-left>
+          <ion-icon name="pin"></ion-icon>
+        </button>
+        </ion-item>
+      </ion-col>
+      <ion-col width-66>
+        <ion-item>
+          <ion-input name="location" [(ngModel)]="mealDeal.location" type="text" placeholder="Pick an address..."></ion-input>
+        </ion-item>
+      </ion-col>
     </ion-row>
     <ion-row>
       <ion-item>

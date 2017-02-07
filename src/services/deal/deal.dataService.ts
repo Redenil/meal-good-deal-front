@@ -20,6 +20,7 @@ export class DealDataService {
             let list = new Array<DealModel>();
             let query = new Parse.Query('MealDeal');
             query.include('file');
+            query.include('place');
             query.find({
                 success: function (results) {
                     for (var i = 0; i < results.length; i++) {
@@ -32,6 +33,12 @@ export class DealDataService {
                         mealDeal.fileImage = model.file ? model.file.url : null;
                         mealDeal.isFacebookShared = model.isFacebookShared;
                         mealDeal.isTwitterShared = model.isTwitterShared;
+                        if (model.place) {
+                            mealDeal.place.address = model.place.address;
+                            mealDeal.place.name = model.place.name;
+                            mealDeal.place.latitude = model.place.latitude;
+                            mealDeal.place.longitude = model.place.longitude;
+                        }
 
                         list.push(mealDeal);
                     }
@@ -80,20 +87,30 @@ export class DealDataService {
 
     createDeal(deal: DealModel): Promise<boolean> {
         let MealDeal = Parse.Object.extend("MealDeal");
-        let parseObject = new MealDeal();
+        let Place = Parse.Object.extend("Place");
+        let mealDeal = new MealDeal();
+        let place = new Place();
         return new Promise(function (resolve, reject) {
 
-            parseObject.set("title", deal.title);
-            parseObject.set("description", deal.description);
-            parseObject.set("location", deal.location);
-            parseObject.set("price", Number(deal.price));
-            parseObject.set("isTwitterShared", Boolean(deal.isTwitterShared));
-            parseObject.set("isFacebookShared", Boolean(deal.isFacebookShared));
+            mealDeal.set("title", deal.title);
+            mealDeal.set("description", deal.description);
+            mealDeal.set("location", deal.location);
+            mealDeal.set("price", Number(deal.price));
+            mealDeal.set("isTwitterShared", Boolean(deal.isTwitterShared));
+            mealDeal.set("isFacebookShared", Boolean(deal.isFacebookShared));
+
+            place.set('placeId', deal.place.placeId);
+            place.set('address', deal.place.address);
+            place.set('latitude', deal.place.latitude);
+            place.set('longitude', deal.place.longitude);
+            place.set('name', deal.place.name);
+
+            mealDeal.set('place', place);
 
             var parseFile = new Parse.File(deal.title + 'Picture', { base64: deal.fileImage });
             parseFile.save().then(function () {
-                parseObject.set('file', parseFile);
-                parseObject.save(null, {
+                mealDeal.set('file', parseFile);
+                mealDeal.save(null, {
                     useMasterKey: true,
                     success: function (savedObject) {
                         resolve(true);

@@ -1,6 +1,6 @@
 import { Component, OpaqueToken, Injectable, Inject } from '@angular/core';
 import { NavController, NavParams, LoadingController } from 'ionic-angular';
-import { TwitterConnect, Facebook , NativeStorage} from 'ionic-native';
+import { TwitterConnect, Facebook, NativeStorage } from 'ionic-native';
 import { APP_CONFIG_TOKEN, APP_CONFIG, ApplicationConfig } from '../../app/app-config';
 import { TabsPage } from '../tabs/tabs';
 import { TwitterLoginService } from '../../services/services'

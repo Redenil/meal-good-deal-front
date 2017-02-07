@@ -1,5 +1,6 @@
 import { Component, NgZone } from '@angular/core';
 import { ViewController } from 'ionic-angular';
+import { PlaceModel } from '../../services/models';
 
 @Component({
   templateUrl: 'autocomplete.html'
@@ -8,13 +9,14 @@ import { ViewController } from 'ionic-angular';
 export class AutocompletePage {
   autocompleteItems;
   autocomplete;
-  service = new google.maps.places.AutocompleteService();
+  service: google.maps.places.AutocompleteService;
 
   constructor(public viewCtrl: ViewController, private zone: NgZone) {
     this.autocompleteItems = [];
     this.autocomplete = {
       query: ''
     };
+    this.service = new google.maps.places.AutocompleteService();
   }
 
   dismiss() {
@@ -22,6 +24,7 @@ export class AutocompletePage {
   }
 
   chooseItem(item: any) {
+    let place = new PlaceModel();
     this.viewCtrl.dismiss(item);
   }
 

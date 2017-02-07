@@ -1,6 +1,6 @@
 <ion-content class="card-background-page" padding>
   <ion-list>
-    <ion-card *ngFor="let deal of deals, let odd=odd">
+    <ion-card *ngFor="let deal of deals, let odd=odd" (click)="showDealDetail(deal)">
       <img [src]="deal.fileImage" />
       <div class="card-title">{{deal.title}}</div>
       <div class="card-subtitle">{{deal.price}}</div>

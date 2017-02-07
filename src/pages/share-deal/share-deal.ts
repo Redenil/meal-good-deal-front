@@ -1,22 +1,24 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams, ToastController, ModalController, ActionSheetController, ActionSheet } from 'ionic-angular';
 // import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms'
-import { DealDataService } from '../../services/services'
+import { DealDataService, MapsDataService } from '../../services/services'
 import { DealModel } from '../../services/models'
 import { Storage } from '@ionic/storage';
 import { Camera, CameraOptions } from 'ionic-native';
+import { NearbyMapPage } from '../../modals/modals'
 
 import { AutocompletePage } from '../autocomplete/autocomplete'
 
 
 @Component({
   selector: 'page-share-deal',
-  templateUrl: 'share-deal.html',
-  providers: [DealDataService]
+  templateUrl: 'share-deal.html'
 })
 export class ShareDealPage {
   public mealDeal: DealModel;
   private actionSheet: ActionSheet;
+  public locationSearchEnabled: boolean;
+  public nearBySearchEnabled: boolean;
 
   constructor(
     public navCtrl: NavController,
@@ -25,11 +27,14 @@ export class ShareDealPage {
     private storage: Storage,
     private toastCtrl: ToastController,
     private modalCtrl: ModalController,
-    private actionSheetCtrl: ActionSheetController) {
+    private actionSheetCtrl: ActionSheetController,
+    private mapsDataservice: MapsDataService) {
     this.mealDeal = new DealModel();
     this.mealDeal.isTwitterShared = false;
     this.mealDeal.isFacebookShared = false;
     this.mealDeal.location = '';
+    this.locationSearchEnabled = false;
+    this.nearBySearchEnabled = false;
   }
 
   ionViewWillEnter() {
@@ -87,6 +92,30 @@ export class ShareDealPage {
     this.actionSheet.present();
   }
 
+  enableNearBySearch() {
+    this.nearBySearchEnabled = true;
+    this.locationSearchEnabled = false;
+    let modal = this.modalCtrl.create(NearbyMapPage);
+    modal.onDidDismiss(data => {
+      var self = this;
+      self.mealDeal.location = data.address;
+      self.mealDeal.place = data;
+    });
+    modal.present();
+  }
+
+  enableLocationSearch() {
+    this.nearBySearchEnabled = false;
+    this.locationSearchEnabled = true;
+    let modal = this.modalCtrl.create(AutocompletePage);
+    let self = this;
+    modal.onDidDismiss(data => {
+      self.mealDeal.location = data;
+      self.mealDeal.place = data;
+    });
+    modal.present();
+  }
+
   getPicture(options: CameraOptions) {
     let self = this;
     Camera.getPicture(options).then((imageData) => {
@@ -116,14 +145,5 @@ export class ShareDealPage {
         });
         toast.present();
       });
-  }
-
-  showAddressModal() {
-    let modal = this.modalCtrl.create(AutocompletePage);
-    let self = this;
-    modal.onDidDismiss(data => {
-      self.mealDeal.location = data;
-    });
-    modal.present();
   }
 }
