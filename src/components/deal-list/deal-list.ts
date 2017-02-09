@@ -1,9 +1,8 @@
-import { Component, Input, Inject } from '@angular/core';
+import { Component, Input, Inject, Pipe, PipeTransform } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { DealDataService } from '../../services/services'
 import { DealModel } from '../../services/models';
 import { DealDetailPage } from '../../pages/pages';
-
 
 @Component({
   selector: 'deal-list',
@@ -18,7 +17,7 @@ export class DealList {
     public dealDataService: DealDataService) {
   }
 
-  showDealDetail(deal){
+  showDealDetail(deal) {
     this.navCtrl.push(DealDetailPage, deal);
   }
 }

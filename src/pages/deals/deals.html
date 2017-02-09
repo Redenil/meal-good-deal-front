@@ -1,4 +1,4 @@
-<ion-header>
+<ion-header primary>
   <ion-navbar hideBackButton="true">
     <ion-title *ngIf="!inSearch">Meal deals</ion-title>
     <ion-buttons *ngIf="!inSearch" end>
@@ -21,7 +21,7 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
+<ion-content>
   <deal-list [deals]="deals">
   </deal-list>
 </ion-content>

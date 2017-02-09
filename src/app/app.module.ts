@@ -10,6 +10,7 @@ import { NearbyMapPage } from '../modals/modals';
 import { DealDataService, MapsDataService } from '../services/services';
 import { Storage } from '@ionic/storage';
 import { ReactiveFormsModule } from '@angular/forms';
+import { EvenOddPipe } from '../pipes/evenodd';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     AutocompletePage,
     EditProfile,
     NearbyMapPage,
-    DealDetailPage
+    DealDetailPage,
+    EvenOddPipe
   ],
   imports: [
     ReactiveFormsModule,

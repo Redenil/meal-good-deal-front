@@ -1,11 +1,28 @@
-<ion-content class="card-background-page" padding>
-  <ion-list>
-    <ion-card *ngFor="let deal of deals, let odd=odd" (click)="showDealDetail(deal)">
-      <img [src]="deal.fileImage" />
-      <div class="card-title">{{deal.title}}</div>
-      <div class="card-subtitle">{{deal.price}}</div>
+<ion-grid>
+  <ion-row>
+    <ion-col width-50>
+      <ion-list class="card-background-page">
+        <ion-card *ngFor="let deal of (deals | evenodd:'even')" (click)="showDealDetail(deal)">
+          <img [src]="deal.fileImage" />
+          <div class="card-title">{{deal.title}}</div>
+          <div class="card-subtitle">{{deal.price}}</div>
+        </ion-card>
+      </ion-list>
+    </ion-col>
+    <ion-col width-50>
+      <ion-list class="card-background-page">
+        <ion-card *ngFor="let deal of (deals | evenodd:'odd')" (click)="showDealDetail(deal)">
+          <img [src]="deal.fileImage" />
+          <div class="card-title">{{deal.title}}</div>
+          <div class="card-subtitle">{{deal.price}}</div>
+        </ion-card>
+      </ion-list>
+    </ion-col>
 
-      <!--<ion-fab right top>
+  </ion-row>
+</ion-grid>
+
+<!--<ion-fab right top>
         <button ion-fab>
       <ion-icon name="pin"></ion-icon>
         </button>
@@ -20,6 +37,3 @@
         <ion-icon name="usd"></ion-icon>
         </button>
       </ion-fab>-->
-    </ion-card>
-  </ion-list>
-</ion-content>

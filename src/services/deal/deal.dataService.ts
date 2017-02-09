@@ -16,29 +16,17 @@ export class DealDataService {
     }
 
     getDeals(): Promise<Array<DealModel>> {
+        let self = this;
+        let list = new Array<DealModel>();
+
         return new Promise(function (resolve, reject) {
-            let list = new Array<DealModel>();
             let query = new Parse.Query('MealDeal');
             query.include('file');
             query.include('place');
             query.find({
                 success: function (results) {
                     for (var i = 0; i < results.length; i++) {
-                        var model = results[i].toJSON();
-                        var mealDeal = new DealModel();
-                        mealDeal.title = model.title;
-                        mealDeal.description = model.description;
-                        mealDeal.location = model.location;
-                        mealDeal.price = model.price;
-                        mealDeal.fileImage = model.file ? model.file.url : null;
-                        mealDeal.isFacebookShared = model.isFacebookShared;
-                        mealDeal.isTwitterShared = model.isTwitterShared;
-                        if (model.place) {
-                            mealDeal.place.address = model.place.address;
-                            mealDeal.place.name = model.place.name;
-                            mealDeal.place.latitude = model.place.latitude;
-                            mealDeal.place.longitude = model.place.longitude;
-                        }
+                        let mealDeal = self.convertParseObjectToModel(results[i]);
 
                         list.push(mealDeal);
                     }
@@ -52,6 +40,7 @@ export class DealDataService {
     }
 
     searchDeals(searchTerm: string): Promise<Array<DealModel>> {
+        let self = this;
         let list = new Array<DealModel>();
         let titleQuery = new Parse.Query('MealDeal');
         titleQuery.contains("title", searchTerm);
@@ -60,19 +49,11 @@ export class DealDataService {
         descriptionQuery.contains("description", searchTerm);
         var mainQuery = Parse.Query.or(titleQuery, descriptionQuery);
         mainQuery.include('file');
-        return new Promise(function (resolve, reject) {
+        return new Promise((resolve, reject) => {
             mainQuery.find({
                 success: function (results) {
                     for (var i = 0; i < results.length; i++) {
-                        var model = results[i].toJSON();
-                        var mealDeal = new DealModel();
-                        mealDeal.title = model.title;
-                        mealDeal.description = model.description;
-                        mealDeal.location = model.location;
-                        mealDeal.price = model.price;
-                        mealDeal.fileImage = model.file ? model.file.url : null;
-                        mealDeal.isFacebookShared = model.isFacebookShared;
-                        mealDeal.isTwitterShared = model.isTwitterShared;
+                        let mealDeal = self.convertParseObjectToModel(results[i]);
 
                         list.push(mealDeal);
                     }
@@ -86,6 +67,7 @@ export class DealDataService {
     }
 
     createDeal(deal: DealModel): Promise<boolean> {
+        let self = this;
         let MealDeal = Parse.Object.extend("MealDeal");
         let Place = Parse.Object.extend("Place");
         let mealDeal = new MealDeal();
@@ -107,7 +89,7 @@ export class DealDataService {
 
             mealDeal.set('place', place);
 
-            var parseFile = new Parse.File(deal.title + 'Picture', { base64: deal.fileImage });
+            var parseFile = new Parse.File('picture-' + self.createGuid(), { base64: deal.fileImage });
             parseFile.save().then(function () {
                 mealDeal.set('file', parseFile);
                 mealDeal.save(null, {
@@ -123,5 +105,34 @@ export class DealDataService {
                 reject(error);
             });
         });
+    }
+
+    createGuid() {
+        return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+            var r = Math.random() * 16 | 0, v = c === 'x' ? r : (r & 0x3 | 0x8);
+            return v.toString(16);
+        });
+    }
+
+    convertParseObjectToModel(parseMealDeal: any): DealModel {
+        var model = parseMealDeal.toJSON();
+        var mealDeal = new DealModel();
+        mealDeal.title = model.title;
+        mealDeal.description = model.description;
+        mealDeal.location = model.location;
+        mealDeal.price = model.price;
+        mealDeal.fileImage = model.file ? model.file.url : null;
+        mealDeal.isFacebookShared = model.isFacebookShared;
+        mealDeal.isTwitterShared = model.isTwitterShared;
+
+        if (model.place) {
+            mealDeal.place.address = model.place.address;
+            mealDeal.place.name = model.place.name;
+            mealDeal.place.latitude = model.place.latitude;
+            mealDeal.place.longitude = model.place.longitude;
+        }
+
+        return mealDeal;
+
     }
 }
