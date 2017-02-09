@@ -2,18 +2,17 @@ import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { Splashscreen } from 'ionic-native';
 import { Storage } from '@ionic/storage';
-import { LoginPage, ShareDealPage, DealsPage } from '../pages';
+import { LoginPage, DealsPage } from '../pages';
 
 @Component({
   selector: 'page-HomePage',
-  templateUrl: 'HomePage.html'
+  templateUrl: 'homePage.html'
 })
 export class HomePage {
   public connected: boolean;
 
   constructor(private navCtrl: NavController,
     private storage: Storage) {
-    this.connected = false;
   }
 
   ionViewWillEnter() {
@@ -23,12 +22,8 @@ export class HomePage {
         self.connected = true;
         Splashscreen.hide();
       }).catch((error) => {
-        self.connected = false;
+        self.connected = true;
         Splashscreen.hide();
       });
-  }
-
-  newShare() {
-    this.navCtrl.push(ShareDealPage);
   }
 }

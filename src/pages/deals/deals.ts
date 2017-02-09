@@ -6,7 +6,7 @@ import { DealDataService } from '../../services/services'
 import { DealModel } from '../../services/models'
 
 @Component({
-  selector: 'page-deals',
+  selector: 'deals',
   templateUrl: 'deals.html',
   providers: [DealDataService]
 })

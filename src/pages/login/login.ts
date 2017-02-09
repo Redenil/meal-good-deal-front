@@ -123,4 +123,9 @@ export class LoginPage {
         loading.dismiss();
       });
   }
+
+  // to remove
+  loginDebug(){
+    this.navCtrl.push(TabsPage);
+  }
 }
