@@ -10,10 +10,12 @@
       </button>
     </ion-buttons>
     <ion-toolbar *ngIf="inSearch" no-border-top>
-      <ion-searchbar color="primary" placeholder="Search" [(ngModel)]="searchTerm" (ionInput)="applySearch()">
-      </ion-searchbar>
+      <form (ngSubmit)="submitSearch($event)">
+        <ion-searchbar name="search" color="primary" placeholder="Search deals ..." [(ngModel)]="searchTerm">
+        </ion-searchbar>
+      </form>
       <ion-buttons end>
-        <button ion-button ion-icon type="button" (click)="inSearch = !inSearch">
+        <button ion-button ion-icon type="button" (click)="onSearchCancel()">
         <ion-icon name="close"></ion-icon>
       </button>
       </ion-buttons>

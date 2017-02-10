@@ -12,6 +12,7 @@ import { DealModel } from '../../services/models'
 })
 export class DealsPage {
   public deals: Array<DealModel>;
+  public filteredDeals: Array<DealModel>;
   public inSearch: boolean;
   public searchTerm: string;
 
@@ -25,14 +26,21 @@ export class DealsPage {
   }
 
   ngOnInit() {
-    let self = this;
     let loader = this.loadingCtrl.create({
       content: "Please wait while fetching deals..."
     });
     loader.present();
-    this.dealDataService.getDeals().then(result => {
+    this.getDeals().then(result => {
       loader.dismiss();
-      self.deals = result;
+    });
+  }
+
+  getDeals(): Promise<any> {
+    return new Promise((resolve, reject) => {
+      this.dealDataService.getDeals().then(result => {
+        this.deals = result;
+        resolve();
+      });
     });
   }
 
@@ -42,7 +50,9 @@ export class DealsPage {
 
     modal.onWillDismiss((data: any[]) => {
       if (data) {
+        this.searchTerm = '';
         this.applyFilters();
+        this.getDeals();
       }
     });
   }
@@ -55,5 +65,17 @@ export class DealsPage {
     this.dealDataService.searchDeals(this.searchTerm).then(deals => {
       self.deals = deals;
     });
+  }
+
+  submitSearch() {
+    let self = this;
+    this.dealDataService.searchDeals(this.searchTerm).then(deals => {
+      self.deals = deals;
+    });
+  }
+
+  onSearchCancel(){
+    this.inSearch = !this.inSearch;
+    this.getDeals();
   }
 }

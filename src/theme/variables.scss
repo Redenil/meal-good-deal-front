@@ -44,6 +44,9 @@ $colors: (
 // --------------------------------------------------
 // iOS only Sass variables can go here
 $toolbar-ios-background : color($colors, primary);
+$searchbar-ios-background-color :	rgba(0, 0, 0, .2);
+$searchbar-ios-input-text-color : #fff;
+$searchbar-ios-input-placeholder-color:  #fff;
 
 // Use the primary color as the background for the toolbar-md-background
 $toolbar-md-background :  color($colors, primary);
