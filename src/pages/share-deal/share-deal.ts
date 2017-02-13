@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, ToastController, ModalController, ActionSheetController, ActionSheet } from 'ionic-angular';
+import { NavController, NavParams, ToastController, ModalController, ActionSheetController, ActionSheet, AlertController, AlertOptions } from 'ionic-angular';
 // import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms'
 import { DealDataService, MapsDataService } from '../../services/services'
 import { DealModel } from '../../services/models'
 import { Storage } from '@ionic/storage';
 import { Camera, CameraOptions } from 'ionic-native';
 import { NearbyMapPage } from '../../modals/modals'
+import { HomePage } from '../../pages/pages'
 
 import { AutocompletePage } from '../autocomplete/autocomplete'
 
@@ -28,6 +29,7 @@ export class ShareDealPage {
     private toastCtrl: ToastController,
     private modalCtrl: ModalController,
     private actionSheetCtrl: ActionSheetController,
+    private alertCtrl : AlertController,
     private mapsDataservice: MapsDataService) {
     this.mealDeal = new DealModel();
     this.mealDeal.isTwitterShared = false;
@@ -132,11 +134,16 @@ export class ShareDealPage {
 
   savePlan() {
     this.dealDataService.createDeal(this.mealDeal).then(p => {
-      let toast = this.toastCtrl.create({
-        message: 'Your deal has been shared',
-        duration: 3000
+      let alert = this.alertCtrl.create({
+      title: 'Deal shared!',
+      subTitle: "Let's see whether you get a tones of likes !",
+      buttons: [{
+        text : 'ok',
+        handler: () =>{
+          this.navCtrl.push(HomePage);
+        }}]  
       });
-      toast.present();
+        alert.present();
     })
       .catch(p => {
         let toast = this.toastCtrl.create({

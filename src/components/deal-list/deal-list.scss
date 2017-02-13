@@ -25,21 +25,21 @@ deal-list {
   }
   .like-button{
     position: absolute;
-    top: 3px;
-    left: 3px;
-    color: color($colors, primary);
+    top: 5px;
+    left: 5px;
+    color: color($colors, light);
     width: auto;
   }
 
   .like-icon{
-      color: color($colors, primary);
+      color: color($colors, light);
     }
 
   .avatar-icon{
     position: absolute;
-    bottom: 3px;
-    left: 3px;
-    color: color($colors, primary);
+    bottom: 5px;
+    left: 5px;
+    color: color($colors, light);
     width: 20px;
     height: 20px;
     border-radius: 20px;
@@ -47,24 +47,25 @@ deal-list {
    	-moz-border-radius: 20px;
     border-style: solid;
     border-width: 1px;
-    border-color: color($colors, primary);
+    border-color: color($colors, light);
   }
 
   .localization-icon{
     position: absolute;
-    top: 3px;
-    right: 3px;
-        color: color($colors, primary);
+    top: 5px;
+    right: 5px;
+    color: color($colors, light);
   }
 
   .price-button{
+    color: color($colors, light);    
     position: absolute;
-    bottom: 3px;
-    right: 3px;
+    bottom: 5px;
+    right: 5px;
   }
 
   .price-icon{
-    color: color($colors, primary);
+    color: color($colors, light);
     font-size: 1.2rem;
   }
 

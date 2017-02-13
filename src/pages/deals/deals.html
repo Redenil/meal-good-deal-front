@@ -24,6 +24,10 @@
 </ion-header>
 
 <ion-content>
-  <deal-list [deals]="deals">
+  <deal-list [deals]="deals" [hasChanged]="hasChanged" [pageNumber]="pageNumber">
   </deal-list>
+  <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
+    <ion-infinite-scroll-content loadingText="Loading more deals...">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
 </ion-content>

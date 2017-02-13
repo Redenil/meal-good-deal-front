@@ -14,7 +14,7 @@
     <ion-row>
       <ion-col width-25>
         <img *ngIf="mealDeal.fileImage != null" [src]="mealDeal.fileImage" (click)="takePicture()">
-        <button *ngIf="mealDeal.fileImage == null" ion-button icon-only>
+        <button *ngIf="mealDeal.fileImage == null" (click)="takePicture()" ion-button icon-only>
           <ion-icon name="image"></ion-icon>
         </button>
       </ion-col>
@@ -40,17 +40,17 @@
     </ion-row>
     <ion-row>
       <ion-col width-33>
-        <ion-item>
-          <button type="button" (click)="enableNearBySearch()" ion-button icon-only item-left>
+        <ion-item no-lines>
+          <button class="locate-icon" type="button" (click)="enableNearBySearch()" ion-button icon-only item-left>
           <ion-icon name="locate"></ion-icon>
         </button>
-          <button type="button" (click)="enableLocationSearch()" ion-button icon-only item-left>
+          <button class="locate-icon" type="button" (click)="enableLocationSearch()" ion-button icon-only item-left>
           <ion-icon name="pin"></ion-icon>
         </button>
         </ion-item>
       </ion-col>
       <ion-col width-66>
-        <ion-item>
+        <ion-item class="restaurant-field">
           <ion-input name="location" [(ngModel)]="mealDeal.location" type="text" placeholder="Pick an address..."></ion-input>
         </ion-item>
       </ion-col>
@@ -67,7 +67,7 @@
         <ion-toggle name="twitterShare" class="toggle-btn" [(ngModel)]="mealDeal.isTwitterShared" color="twitter"></ion-toggle>
       </ion-item>
     </ion-row>
-    <button ion-button full icon-right type="submit">
+    <button ion-button full icon-right type="submit" round>
         Share
        <ion-icon name="share"></ion-icon>
     </button>

@@ -4,6 +4,7 @@ import { DealList } from '../../components/deal-list/deal-list';
 import { DealFiltersPage } from '../deal-filters/deal-filters'
 import { DealDataService } from '../../services/services'
 import { DealModel } from '../../services/models'
+import { Subject } from 'rxjs/Subject';
 
 @Component({
   selector: 'deals',
@@ -15,6 +16,10 @@ export class DealsPage {
   public filteredDeals: Array<DealModel>;
   public inSearch: boolean;
   public searchTerm: string;
+  public hasChanged: boolean;
+  pageNumber: number = 0;
+
+  public observableDeals = new Subject<Array<DealModel>>();
 
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
@@ -23,6 +28,7 @@ export class DealsPage {
     public loadingCtrl: LoadingController) {
     this.inSearch = false;
     this.searchTerm = '';
+    this.hasChanged = false;
   }
 
   ngOnInit() {
@@ -37,7 +43,7 @@ export class DealsPage {
 
   getDeals(): Promise<any> {
     return new Promise((resolve, reject) => {
-      this.dealDataService.getDeals().then(result => {
+      this.dealDataService.getDeals(0).then(result => {
         this.deals = result;
         resolve();
       });
@@ -74,8 +80,21 @@ export class DealsPage {
     });
   }
 
-  onSearchCancel(){
+  onSearchCancel() {
     this.inSearch = !this.inSearch;
     this.getDeals();
+  }
+
+  doInfinite(infiniteScroll) {
+    this.pageNumber++;
+    console.log('Begin async operation');
+    this.hasChanged = true;
+    this.dealDataService.getDeals(this.pageNumber).then((result) => {
+      this.hasChanged = true;
+      result.forEach((item) => {
+        this.deals.push(item);
+      })
+      infiniteScroll.complete();
+    });
   }
 }
