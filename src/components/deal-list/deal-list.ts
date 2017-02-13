@@ -27,13 +27,7 @@ export class DealList implements OnChanges {
       if (propName === "hasChanged") {
         let changedProp = changes[propName];
         if (changedProp.currentValue === true) {
-
-          this.dealDataService.getDeals(this.pageNumber).then((result) => {
-            result.forEach((item) => {
-              this.deals.push(item);
-            });
-            this.detector.markForCheck();
-          });
+          this.detector.detectChanges();
         }
       }
     }

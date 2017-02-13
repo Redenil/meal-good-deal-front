@@ -91,9 +91,9 @@ export class DealsPage {
     this.hasChanged = true;
     this.dealDataService.getDeals(this.pageNumber).then((result) => {
       this.hasChanged = true;
-      result.forEach((item) => {
-        this.deals.push(item);
-      })
+      let tmp = this.deals;
+      this.deals = null;
+      this.deals = tmp.concat(result);
       infiniteScroll.complete();
     });
   }

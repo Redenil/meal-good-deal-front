@@ -6,7 +6,6 @@ import { DealModel } from './deal.model';
 @Injectable()
 export class DealDataService {
     public serverApi: any;
-    private DEAL_NUMBER = 15;
 
     constructor(public config: ConfigHelper) {
         Parse.initialize(config.configurations.parse.parseApplicationId);
@@ -19,13 +18,14 @@ export class DealDataService {
     getDeals(page: number): Promise<Array<DealModel>> {
         let self = this;
         let list = new Array<DealModel>();
+        let DEAL_NUMBER = 10;
 
         return new Promise(function (resolve, reject) {
             let query = new Parse.Query('MealDeal');
             query.include('file');
             query.include('place');
-            query.limit(15);
-            query.skip(15 * page);
+            query.limit(DEAL_NUMBER);
+            query.skip(DEAL_NUMBER * page);
             query.find({
                 success: function (results) {
                     for (var i = 0; i < results.length; i++) {
