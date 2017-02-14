@@ -1,4 +1,7 @@
 export class UserProfile {
+    public id: string;
+    public access_token: string;
+    public expiration_date : string;
     public email:string;
     public userName: string;
     public name: string;
@@ -12,12 +15,12 @@ export class UserProfile {
     public isConnected:boolean
     public profileType: ProfileType;
 
-    public facebookToken: string;
-    public twitterToken: string;
-
-    constructor(email:string=null,
+    constructor(
+        id: string = null,
+        access_token: string = null,
+        expiration_date: string = null,
+        email:string=null,
         userName: string = null,
-        userId : string = null,
         name: string = null,
         firstName: string = null,
         lastName: string = null,
@@ -27,9 +30,8 @@ export class UserProfile {
         local: string = null,
         picture: any = null,
         isConnected: boolean = null,
-        profileType: ProfileType = null,
-        facebookToken: string = null,
-        twitterToken: string = null) {
+        profileType: ProfileType = null
+        ) {
         this.email=email;
         this.userName = userName;
         this.name = name;
@@ -42,8 +44,9 @@ export class UserProfile {
         this.picture = picture;
         this.isConnected=isConnected;
         this.profileType = profileType;
-        this.facebookToken = facebookToken;
-        this.twitterToken = twitterToken;
+        this.access_token = access_token;
+        this.id=id;
+        this.expiration_date=expiration_date;
     }
 }
 

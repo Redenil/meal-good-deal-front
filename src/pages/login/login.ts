@@ -1,15 +1,14 @@
 import { Component, OpaqueToken, Injectable, Inject } from '@angular/core';
 import { NavController, NavParams, LoadingController } from 'ionic-angular';
 import { TwitterConnect, Facebook, NativeStorage } from 'ionic-native';
-import { APP_CONFIG_TOKEN, APP_CONFIG, ApplicationConfig } from '../../app/app-config';
 import { TabsPage } from '../tabs/tabs';
-import { TwitterLoginService } from '../../services/services'
 import { UserProfile, ProfileType } from '../../services/models'
+import { Parse } from 'parse';
+import { ConfigHelper } from '../../helpers/configHelper'
 
 @Component({
   selector: 'page-login',
   templateUrl: 'login.html',
-  providers: [{ provide: APP_CONFIG_TOKEN, useValue: APP_CONFIG }, TwitterLoginService]
 })
 export class LoginPage {
   private facebookAppId: number;
@@ -17,10 +16,15 @@ export class LoginPage {
     private navCtrl: NavController,
     private navParams: NavParams,
     private loadingCtrl: LoadingController,
-    private twitterLoginService: TwitterLoginService,
-    @Inject(APP_CONFIG_TOKEN) config: ApplicationConfig) {
+    public config: ConfigHelper) {
     console.log('constructor LoginPage');
-    Facebook.browserInit(config.facebookAppId, "v2.8");
+    Parse.initialize(config.configurations.parse.parseApplicationId);
+    Parse.masterKey = config.configurations.parse.parseMasterKey;
+    Parse.serverURL = config.configurations.parse.parseServerUrl;
+    Parse.javaScriptKey = config.configurations.parse.javaScriptKey;
+    Parse.fileKey = config.configurations.parse.fileKey;
+    Facebook.browserInit(config.configurations.facebook.facebookAppId,
+    config.configurations.facebook.version);
   }
 
   ionViewDidLoad() {
@@ -40,9 +44,12 @@ export class LoginPage {
       TwitterConnect.showUser().then(function(user){
         console.log('loginTwitter - user : '+JSON.stringify(user));
         //Save the user data in NativeStorage
-        let userProfile = new UserProfile(user.email,
-        user.screen_name,
+        let userProfile = new UserProfile(
         "twitter-"+user.id,
+        "",
+        "",
+        user.email,
+        user.screen_name,
         user.name,
         user.name,
         "",
@@ -52,11 +59,9 @@ export class LoginPage {
         user.location,
         user.profile_image_url,
         true,
-        ProfileType.Facebook,
-        "",
-        response.token
+        ProfileType.Facebook
         );
-       NativeStorage.setItem('CurrentUser',userProfile)
+        NativeStorage.setItem('CurrentUser',userProfile)
        .then(function () {
          loading.dismiss();
          nav.push(TabsPage);
@@ -93,9 +98,15 @@ export class LoginPage {
           .then(function (user) {
             console.log('loginFacebook - user : '+JSON.stringify(user));
             //Save user info in the NativeStorage
-            let userProfile = new UserProfile(user.email,
+            let expirationDate = new Date(
+                  new Date().getTime() + response.authResponse.expiresIn * 1000
+            ).toISOString();
+            let userProfile = new UserProfile(
+              response.authResponse.userID,
+              response.authResponse.accessToken,
+              expirationDate,
+              user.email,
               user.first_name,
-              "facebook-"+user.id,
               user.name,
               user.first_name,
               user.last_name,
@@ -105,16 +116,26 @@ export class LoginPage {
               user.locale,
               "https://graph.facebook.com/" + user.id + "/picture?type=large",
               true,
-              ProfileType.Facebook,
-              response.authResponse.accessToken,
-              ""
+              ProfileType.Facebook
             );
-            NativeStorage.setItem('CurrentUser',userProfile)
-            .then(function () {
+            console.log('loginFacebook - userProfile : '+JSON.stringify(userProfile));
+            Parse.FacebookUtils.logIn(userProfile)
+            .then(function (userParse) {
+              console.log('loginFacebook - userParse : '+JSON.stringify(userParse));
+            }, function (userParse,error) {
+              console.log('loginFacebook - Error : '+JSON.stringify(error));
               loading.dismiss();
-              nav.push(TabsPage);
+            }).then(function (userParse) {
+              NativeStorage.setItem('CurrentUser',userProfile)
+              .then(function () {
+                loading.dismiss();
+                nav.push(TabsPage);
+              }, function (error) {
+                console.log(error);
+                loading.dismiss();
+              })
             }, function (error) {
-              console.log(error);
+              console.log('loginFacebook - Error : '+JSON.stringify(error));
               loading.dismiss();
             })
           })

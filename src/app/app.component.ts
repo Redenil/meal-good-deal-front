@@ -23,8 +23,14 @@ export class MyApp {
         // user is previously logged and we have his data
         // we will let him access the app
         console.log("CurrentUser : "+data.name);
-        env.nav.push(TabsPage);
-        Splashscreen.hide();
+        if((new Date().getTime() - new Date(data.expiration_date).getTime())<1){
+          env.nav.push(TabsPage);
+          Splashscreen.hide();
+        }else{
+          env.nav.push(LoginPage);
+          Splashscreen.hide();
+        }
+
       }, function (error) {
         //we don't have the user data so we will ask him to log in
         console.log(error);
