@@ -31,7 +31,6 @@ export class ShareDealPage {
     this.mealDeal = new DealModel();
     this.mealDeal.isTwitterShared = false;
     this.mealDeal.isFacebookShared = false;
-    this.mealDeal.location = '';
     this.locationSearchEnabled = false;
     this.nearBySearchEnabled = false;
   }
@@ -96,8 +95,7 @@ export class ShareDealPage {
     this.locationSearchEnabled = false;
     let modal = this.modalCtrl.create(MapsPage);
     modal.onDidDismiss(data => {
-      var self = this;
-      self.mealDeal.place = data;
+      this.mealDeal.place = data;
     });
     modal.present();
   }
