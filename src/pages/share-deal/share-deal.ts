@@ -5,10 +5,7 @@ import { DealDataService, MapsDataService } from '../../services/services'
 import { DealModel } from '../../services/models'
 import { Storage } from '@ionic/storage';
 import { Camera, CameraOptions } from 'ionic-native';
-import { NearbyMapPage } from '../../modals/modals'
-import { HomePage } from '../../pages/pages'
-
-import { AutocompletePage } from '../autocomplete/autocomplete'
+import { HomePage, MapsPage } from '../../pages/pages';
 
 
 @Component({
@@ -97,22 +94,9 @@ export class ShareDealPage {
   enableNearBySearch() {
     this.nearBySearchEnabled = true;
     this.locationSearchEnabled = false;
-    let modal = this.modalCtrl.create(NearbyMapPage);
+    let modal = this.modalCtrl.create(MapsPage);
     modal.onDidDismiss(data => {
       var self = this;
-      self.mealDeal.location = data.address;
-      self.mealDeal.place = data;
-    });
-    modal.present();
-  }
-
-  enableLocationSearch() {
-    this.nearBySearchEnabled = false;
-    this.locationSearchEnabled = true;
-    let modal = this.modalCtrl.create(AutocompletePage);
-    let self = this;
-    modal.onDidDismiss(data => {
-      self.mealDeal.location = data;
       self.mealDeal.place = data;
     });
     modal.present();

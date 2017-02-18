@@ -1,75 +1,61 @@
 <ion-header>
-
-  <ion-navbar>
-    <ion-item color="primary">
-      <ion-icon name="restaurant" item-left></ion-icon>
-      <ion-title>New deal</ion-title>
-    </ion-item>
-  </ion-navbar>
+    <ion-navbar>
+        <button ion-button menuToggle>
+          <ion-icon name="restaurant" item-left></ion-icon>
+        </button>
+        <ion-title>New deal</ion-title>
+    </ion-navbar>
 
 </ion-header>
 
-<ion-content class="page-share-deal" padding>
-  <form (ngSubmit)="savePlan()">
-    <ion-row>
-      <ion-col width-25>
-        <img *ngIf="mealDeal.fileImage != null" [src]="mealDeal.fileImage" (click)="takePicture()">
-        <button *ngIf="mealDeal.fileImage == null" (click)="takePicture()" ion-button icon-only>
+<ion-content class="share-deal-content" padding>
+    <form (ngSubmit)="savePlan()">
+        <ion-row>
+            <ion-col width-25>
+                <img *ngIf="mealDeal.fileImage != null" [src]="mealDeal.fileImage" (click)="takePicture()">
+                <button *ngIf="mealDeal.fileImage == null" (click)="takePicture()" ion-button icon-only>
           <ion-icon name="image"></ion-icon>
         </button>
-      </ion-col>
-      <ion-col width-75>
-        <ion-item>
-          <ion-input type="text" [(ngModel)]="mealDeal.title" name="title" placeholder="title">
-          </ion-input>
+            </ion-col>
+            <ion-col width-75>
+                <ion-item class="text-item">
+                    <ion-input type="text" [(ngModel)]="mealDeal.title" name="title" placeholder="title">
+                    </ion-input>
+                </ion-item>
+            </ion-col>
+        </ion-row>
+        <ion-item class="text-item">
+            <ion-icon name="paper" item-left></ion-icon>
+            <ion-textarea rows="7" [(ngModel)]="mealDeal.description" name="description" placeholder="description"></ion-textarea>
         </ion-item>
-      </ion-col>
-    </ion-row>
-    <ion-row>
-      <ion-item>
-        <ion-icon name="paper" item-left></ion-icon>
-        <ion-textarea [(ngModel)]="mealDeal.description" name="description" placeholder="description"></ion-textarea>
-      </ion-item>
-    </ion-row>
-    <ion-row>
-      <ion-item>
-        <ion-icon name="logo-euro" item-left></ion-icon>
-        <ion-input type="number" [(ngModel)]="mealDeal.price" name="price" placeholder="price">
-        </ion-input>
-      </ion-item>
-    </ion-row>
-    <ion-row>
-      <ion-col width-33>
-        <ion-item no-lines>
-          <button class="locate-icon" type="button" (click)="enableNearBySearch()" ion-button icon-only item-left>
-          <ion-icon name="locate"></ion-icon>
+        <ion-item class="text-item">
+            <ion-icon name="logo-euro" item-left></ion-icon>
+            <ion-input type="number" [(ngModel)]="mealDeal.price" name="price" placeholder="price">
+            </ion-input>
+        </ion-item>
+        <section class="choose-category-section" no-lines>
+            <button ion-button block icon-left type="button" class="choose-category-button" (click)="enableNearBySearch()">
+                <ion-icon name="navigate" md="md-navigate"></ion-icon>
+               <p *ngIf="!mealDeal.place.name">'choose a location'</p>
+               <p *ngIf="mealDeal.place.name">{{mealDeal.place.name +', ' + mealDeal.place.address }}</p>
+            </button>
+        </section>
+        <section class="social-section">
+            <ion-item>
+                <ion-label>Facebook</ion-label>
+                <ion-toggle name="facebookShare" class="toggle-btn" [(ngModel)]="mealDeal.isFacebookShared" color="facebook"></ion-toggle>
+            </ion-item>
+
+            <ion-item>
+                <ion-label>Twitter</ion-label>
+                <ion-toggle name="twitterShare" class="toggle-btn" [(ngModel)]="mealDeal.isTwitterShared" color="twitter"></ion-toggle>
+            </ion-item>
+        </section>
+
+        <button ion-button full icon-right type="submit" round>
+             Share
+              <ion-icon name="share"></ion-icon>
         </button>
-          <button class="locate-icon" type="button" (click)="enableLocationSearch()" ion-button icon-only item-left>
-          <ion-icon name="pin"></ion-icon>
-        </button>
-        </ion-item>
-      </ion-col>
-      <ion-col width-66>
-        <ion-item class="restaurant-field">
-          <ion-input name="location" [(ngModel)]="mealDeal.location" type="text" placeholder="Pick an address..."></ion-input>
-        </ion-item>
-      </ion-col>
-    </ion-row>
-    <ion-row>
-      <ion-item>
-        <ion-label>Facebook</ion-label>
-        <ion-toggle name="facebookShare" class="toggle-btn" [(ngModel)]="mealDeal.isFacebookShared" color="facebook"></ion-toggle>
-      </ion-item>
-    </ion-row>
-    <ion-row>
-      <ion-item>
-        <ion-label>Twitter</ion-label>
-        <ion-toggle name="twitterShare" class="toggle-btn" [(ngModel)]="mealDeal.isTwitterShared" color="twitter"></ion-toggle>
-      </ion-item>
-    </ion-row>
-    <button ion-button full icon-right type="submit" round>
-        Share
-       <ion-icon name="share"></ion-icon>
-    </button>
-  </form>
+
+    </form>
 </ion-content>

@@ -1,21 +1,44 @@
 page-share-deal {
-
-    .icon[name="euro"] {
-        font-size: 35px;
-    }
-    
-    .toggle-btn{
-        margin-left: auto;
-        margin-right: auto;
-        display: block;
-    }
-
-    .locate-icon{
-        width: 20px !important;
-        height: 20px !important;
-    }
-
-    .restaurant-field{
-        padding: 3px;
+    .share-deal-content {
+        background-color: color($colors, background, base);
+        .text-item {
+            border-radius: 6px;
+        }
+        .icon[name="euro"] {
+            font-size: 35px;
+        }
+        .toggle-btn {
+            margin-left: auto;
+            margin-right: auto;
+            display: block;
+        }
+        .locate-icon {
+            width: 20px !important;
+            height: 20px !important;
+        }
+        .restaurant-field {
+            padding: 3px;
+        }
+        .social-section {
+            padding-top: 20px;
+        }
+        .share-button {
+            padding-top: 20px;
+        }
+        .choose-category-section {
+            padding-top: 20px;
+        }
+        .choose-category-button {
+            border-radius: 6px;
+            background-color: $white;
+            color: $white-d;
+            .button-inner {
+                @include justify-content(space-between);
+                ion-icon {
+                    color: color($colors, primary);
+                    font-size: 2.2em;
+                }
+            }
+        }
     }
 }

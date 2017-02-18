@@ -2,33 +2,35 @@ import { NgModule, ErrorHandler } from '@angular/core';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
 import { ConfigHelper } from '../helpers/configHelper';
-import { HomePage, DealDetailPage, ShareDealPage, LoginPage, DealsPage, SettingsPage, DealFiltersPage, FavoritesPage, AutocompletePage, EditProfile } from '../pages/pages';
-import { Ionic2Rating } from 'ionic2-rating';
-import { DealList } from '../components/deal-list/deal-list';
+import { HomePage, DealDetailPage, ShareDealPage, LoginPage, DealsPage, SettingsPage, DealFiltersPage, FavoritesPage, EditProfile, MapsPage } from '../pages/pages';
+import { DealList, GoogleMap, BackgroundImage, Rating } from '../components/components';
 import { TabsPage } from '../pages/tabs/tabs';
-import { NearbyMapPage } from '../modals/modals';
 import { DealDataService, MapsDataService } from '../services/services';
 import { Storage } from '@ionic/storage';
 import { ReactiveFormsModule } from '@angular/forms';
 import { EvenOddPipe } from '../pipes/evenodd';
+import { GoogleMapsService } from '../pages/maps/maps.service';
 
 @NgModule({
   declarations: [
     MyApp,
     HomePage,
     ShareDealPage,
-    Ionic2Rating,
-    DealList,
     LoginPage,
+    MapsPage,
     TabsPage,
     DealsPage,
     SettingsPage,
     DealFiltersPage,
     FavoritesPage,
-    AutocompletePage,
     EditProfile,
-    NearbyMapPage,
     DealDetailPage,
+
+    DealList,
+    BackgroundImage,
+    GoogleMap,
+    Rating,
+
     EvenOddPipe
   ],
   imports: [
@@ -47,10 +49,9 @@ import { EvenOddPipe } from '../pipes/evenodd';
     SettingsPage,
     DealFiltersPage,
     FavoritesPage,
-    AutocompletePage,
-    EditProfile,
-    NearbyMapPage,
-    DealDetailPage
+        EditProfile,
+    DealDetailPage,
+    MapsPage
   ],
   providers: [
     {
@@ -60,6 +61,7 @@ import { EvenOddPipe } from '../pipes/evenodd';
     Storage,
     ConfigHelper,
     DealDataService,
-    MapsDataService]
+    MapsDataService,
+    GoogleMapsService]
 })
 export class AppModule { }
