@@ -5,27 +5,61 @@
 </ion-header>
 
 <ion-content>
-    <div class="about-header">
-        <img [src]="deal.fileImage" alt="ionic logo">
-    </div>
-    <div>
-        <h4>{{deal.title}}</h4>
+     <ion-slides class="contact-slides" pager="true" autoplay="4000" loop="false">
+          <ion-slide class="contact-slide">
+             <background-image class="slide-image" [src]="deal.fileImage" alt="ionic logo" ></background-image>
+          </ion-slide>
+     </ion-slides>
 
-        <ion-list no-lines>
-            <ion-item>
-                <ion-icon name="logo-euro" item-left></ion-icon>
-                <ion-label>{{deal.price}}</ion-label>
-            </ion-item>
+      <ion-row class="contact-details-row" wrap>
+            <ion-col no-padding width-65>
+               <h2 class="contact-name">Restaurant</h2>
+            </ion-col>
+            <ion-col no-padding width-35 class="rating-col">
+               <div class="contact-rating">
+                  <ion-item class="rating-item">
+                      <rating max="5" read-only="true"></rating>
+                  </ion-item>
+               </div>
+            </ion-col>
+            <ion-col no-padding width-100>
+               <p class="contact-description">
+                     Today opens from 8:30 am to 6:00 pm
+               </p>
+            </ion-col>
+    </ion-row>
+    
+    
 
-            <ion-item>
-                <ion-icon name="pin" item-left></ion-icon>
-                <ion-label>Location</ion-label>
-                <ion-label>{{deal.place.name}}</ion-label>
-            </ion-item>
-        </ion-list>
+    <div class="button-bar">
+              
+             <button ion-button primary >
+                <ion-icon name="logo-euro" style="font-size: 1.0em"></ion-icon>
+                 <ion-label style="font-size: 1.0em">{{deal.price}}</ion-label>
+             </button>
+             <button ion-button primary (click)="call(contact.phone)">
+                <ion-icon name="contact"></ion-icon>
+             </button>
+             <button ion-button primary (click)="sendMail(contact.email)">
+                <ion-icon name="md-share"></ion-icon>
+             </button>
+            <button ion-button primary (click)="openInAppBrowser(contact.website)">
+                <ion-icon name="add-circle"></ion-icon>
+            </button>
+             <button ion-button primary (click)="openInAppBrowser(contact.website)">
+                <ion-icon name="star"></ion-icon>
+            </button>
+  </div>
+ 
+   <div> 
 
         <p>
             {{deal.description}}
         </p>
-    </div>
+   </div>
+    
+    <div id="map" style="width:400px;height:400px;"></div>
+     
+    
+
 </ion-content>
