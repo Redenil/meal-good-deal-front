@@ -1,8 +1,8 @@
-export interface IloginService {
+export interface ISocialService {
 
     login(): Promise<any>;
 
     logout(): Promise<boolean>;
 
-    getConnectionStatus();
+    getLoginStatus();
 }

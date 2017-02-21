@@ -4,7 +4,7 @@ import { TwitterConnect, Facebook, NativeStorage } from 'ionic-native';
 import { TabsPage } from '../tabs/tabs';
 import { UserProfile, ProfileType } from '../../services/models'
 import { Parse } from 'parse';
-import { ConfigHelper } from '../../helpers/configHelper'
+import { ConfigHelper } from '../../helpers/configHelper';
 
 @Component({
   selector: 'page-login',

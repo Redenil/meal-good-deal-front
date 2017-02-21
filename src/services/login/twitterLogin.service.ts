@@ -1,10 +1,10 @@
-import { IloginService } from './Ilogin.service';
+import { ISocialService } from './Ilogin.service';
 import { Injectable } from '@angular/core';
 import { TwitterConnect } from 'ionic-native';
 import { Storage } from '@ionic/storage';
 
 @Injectable()
-export class TwitterLoginService implements IloginService {
+export class TwitterLoginService implements ISocialService {
 
     constructor(private storage: Storage) {
     }
@@ -33,6 +33,6 @@ export class TwitterLoginService implements IloginService {
         });
     }
 
-    getConnectionStatus() {
+    getLoginStatus() {
     }
 }
