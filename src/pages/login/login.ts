@@ -1,5 +1,5 @@
 import { Component, OpaqueToken, Injectable, Inject } from '@angular/core';
-import { NavController, NavParams, LoadingController } from 'ionic-angular';
+import { ViewController, NavController, NavParams, LoadingController } from 'ionic-angular';
 import { TwitterConnect, Facebook, NativeStorage } from 'ionic-native';
 import { TabsPage } from '../tabs/tabs';
 import { UserProfile, ProfileType } from '../../services/models'
@@ -16,8 +16,9 @@ export class LoginPage {
     private navCtrl: NavController,
     private navParams: NavParams,
     private loadingCtrl: LoadingController,
+    private viewCtrl: ViewController,
     public config: ConfigHelper) {
-    console.log('constructor LoginPage');
+    
     Parse.initialize(config.configurations.parse.parseApplicationId);
     Parse.serverURL = config.configurations.parse.parseServerUrl;
     Parse.javaScriptKey = config.configurations.parse.javaScriptKey;
@@ -26,13 +27,8 @@ export class LoginPage {
       config.configurations.facebook.version);
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad LoginPage');
-  }
-
   loginTwitter() {
     let self = this;
-    let nav = this.navCtrl;
     let loading = this.loadingCtrl.create({
       content: 'Please wait...'
     });
@@ -61,7 +57,7 @@ export class LoginPage {
         NativeStorage.setItem('CurrentUser', userProfile)
           .then(function () {
             loading.dismiss();
-            nav.push(TabsPage);
+            self.navigateForward();
           }, function (error) {
             console.log(error);
             loading.dismiss();
@@ -74,7 +70,6 @@ export class LoginPage {
 
   loginFacebook() {
     let self = this;
-    let nav = this.navCtrl;
     let loading = this.loadingCtrl.create({
       content: 'Please wait...'
     });
@@ -136,7 +131,7 @@ export class LoginPage {
                           roles[i].save();
                         }
                         loading.dismiss();
-                        nav.push(TabsPage);
+                        self.navigateForward();
                       },
                       error: function (error) {
                         console.log('Role error : ' + JSON.stringify(error));
@@ -159,6 +154,15 @@ export class LoginPage {
 
   // to remove
   loginDebug() {
-    this.navCtrl.push(TabsPage);
+    this.navigateForward();
+  }
+
+  navigateForward() {
+    this.navCtrl.push(TabsPage).then(() => {
+      // first we find the index of the current view controller:
+      const index = this.viewCtrl.index;
+      // then we remove it from the navigation stack
+      this.navCtrl.remove(index);
+    });
   }
 }

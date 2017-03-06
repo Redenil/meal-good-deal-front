@@ -26,30 +26,26 @@ export class MyApp {
         console.log("SessionToken : "+data.parseSessionToken);
         if((new Date().getTime() - new Date(data.expiration_date).getTime())<1
             && data.parseSessionToken!= undefined){
-          env.nav.push(TabsPage);
+          env.openPage(TabsPage);
           Splashscreen.hide();
         }else{
-          env.nav.push(LoginPage);
+          env.openPage(LoginPage);
           Splashscreen.hide();
         }
 
       }, function (error) {
         //we don't have the user data so we will ask him to log in
-        console.log(error);
-        env.nav.push(LoginPage);
+        env.openPage(LoginPage);
         Splashscreen.hide();
       });
       StatusBar.styleDefault();
     });
   }
 
-  initializeApp() {
-
-  }
-
   openPage(page) {
     // Reset the content nav to have just this page
     // we wouldn't want the back button to show in this scenario
     this.nav.setRoot(page.component);
+    this.nav.push(page);
   }
 }
