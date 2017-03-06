@@ -6,7 +6,7 @@ import { GoogleMap } from "../../components/google-map/google-map";
 import { GoogleMapsService } from "../maps/maps.service";
 import { Keyboard, Geolocation, CameraPosition, GoogleMapsMarker, GoogleMapsLatLng, GoogleMapsMarkerOptions } from 'ionic-native';
 import { PlaceModel } from '../../services/models';
-import { MapsModel, MapPlace} from '../maps/maps.model';
+import { MapsModel, MapPlace } from '../maps/maps.model';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/forkJoin';
 
@@ -20,6 +20,7 @@ export class DealDetailPage {
   map_model: MapsModel = new MapsModel();
   choosenPlace: PlaceModel;
   map: any;
+  staticMapUrl: string;
 
   constructor(
     public navCtrl: NavController,
@@ -29,43 +30,17 @@ export class DealDetailPage {
     public GoogleMapsService: GoogleMapsService,
     public viewCtrl: ViewController,
     public navParams: NavParams
-    ) {
-      this.deal = this.navParams.data;
+  ) {
+    this.deal = this.navParams.data;
   }
 
-   ngOnInit() {
-    var mapCanvas = document.getElementById("map");
-    var mapOptions = {
-        center: new google.maps.LatLng(this.deal.place.latitude, this.deal.place.longitude),
-        zoom: 18
-    };
-    this.map = new google.maps.Map(mapCanvas, mapOptions);
-     
-     let ionic: GoogleMapsLatLng = new GoogleMapsLatLng(this.deal.place.latitude, this.deal.place.longitude);
-     let position: CameraPosition = {
-      target: ionic,
-      zoom: 18,
-      tilt: 30
-    }
-    
-    let markerOptions: GoogleMapsMarkerOptions = {
-   position: ionic,
-   title: 'Ionic'
-    };
-
-    var marker = new google.maps.Marker({
-
-      position: ionic,
-      map: this.map,
-      icon: '../assets/icon/pin.min.png',
-      title: 'Chouf m3ah'
-      
-    });
-    
-
+  ngOnInit() {
+    let latLon = this.deal.place.latitude + "," + this.deal.place.longitude;
+    this.staticMapUrl = "https://maps.googleapis.com/maps/api/staticmap?center=" +
+      latLon +
+      "&markers=color:blue%7C" +
+      latLon +
+      "&zoom=14&size=400x400&key=AIzaSyDCAQRH4xvW_uk8g9CY-pjkmZd48BJop28";
   }
 
-  
-   
-  
 }

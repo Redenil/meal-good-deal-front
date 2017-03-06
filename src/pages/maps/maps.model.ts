@@ -70,9 +70,10 @@ export class MapsModel {
 		let getRandom = (min: number, max: number): number => {
 			return Math.floor(Math.random() * (max - min + 1) + min);
 		};
-		// Add a random image
-		_map_place.details["image"] = "./assets/images/maps/place-" + getRandom(1, 9) + ".jpg";
 
+		if (place_result.photos && place_result.photos.length > 0) {
+			_map_place.details["image"] = place_result.photos[0].getUrl({ maxWidth: 230, maxHeight: 104 });
+		}
 		this.nearby_places.push(_map_place);
 	}
 

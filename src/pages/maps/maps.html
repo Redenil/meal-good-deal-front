@@ -5,12 +5,12 @@
         </ion-title>
         <ion-buttons start>
             <button ion-button (click)="dismiss()">
-        <span ion-text color="white" showWhen="ios">Cancel</span>
-        <ion-icon name="md-close" showWhen="android,windows"></ion-icon>
-      </button>
+                 <span ion-text color="white" showWhen="ios">Cancel</span>
+                 <ion-icon class="checkmark-icon" name="md-close" showWhen="android,windows"></ion-icon>
+            </button>
             <button ion-button (click)="chooseItem()">
-        <ion-icon  ios="ios-checkmark" md="md-checkmark"></ion-icon>
-      </button>
+                <ion-icon class="checkmark-icon" ios="ios-checkmark" md="md-checkmark"></ion-icon>
+            </button>
         </ion-buttons>
     </ion-toolbar>
 </ion-header>

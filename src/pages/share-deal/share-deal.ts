@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component} from '@angular/core';
 import { NavController, NavParams, ToastController, ModalController, ActionSheetController, ActionSheet, AlertController, AlertOptions } from 'ionic-angular';
 // import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms'
 import { DealDataService, MapsDataService } from '../../services/services'
@@ -37,6 +37,10 @@ export class ShareDealPage {
 
   ionViewWillEnter() {
     this.takePicture();
+  }
+
+  ionViewWillLeave(){
+    this.mealDeal =  new DealModel();
   }
 
   takePicture() {

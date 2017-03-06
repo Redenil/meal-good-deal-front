@@ -23,7 +23,7 @@ export class LoginPage {
     Parse.javaScriptKey = config.configurations.parse.javaScriptKey;
     Parse.fileKey = config.configurations.parse.fileKey;
     Facebook.browserInit(config.configurations.facebook.facebookAppId,
-    config.configurations.facebook.version);
+      config.configurations.facebook.version);
   }
 
   ionViewDidLoad() {
@@ -38,40 +38,38 @@ export class LoginPage {
     });
 
     loading.present();
-    TwitterConnect.login().then(function(response) {
-      console.log('loginTwitter - response : '+JSON.stringify(response));
-      TwitterConnect.showUser().then(function(user){
-        console.log('loginTwitter - user : '+JSON.stringify(user));
+    TwitterConnect.login().then(function (response) {
+      TwitterConnect.showUser().then(function (user) {
         //Save the user data in NativeStorage
         let userProfile = new UserProfile(
-        "twitter-"+user.id,
-        "",
-        "",
-        user.email,
-        user.screen_name,
-        user.name,
-        user.name,
-        "",
-        "",
-        "",
-        "",
-        user.location,
-        user.profile_image_url,
-        true,
-        ProfileType.Facebook
+          "twitter-" + user.id,
+          "",
+          "",
+          user.email,
+          user.screen_name,
+          user.name,
+          user.name,
+          "",
+          "",
+          "",
+          "",
+          user.location,
+          user.profile_image_url,
+          true,
+          ProfileType.Facebook
         );
-        NativeStorage.setItem('CurrentUser',userProfile)
-       .then(function () {
-         loading.dismiss();
-         nav.push(TabsPage);
-       }, function (error) {
-         console.log(error);
-         loading.dismiss();
-       })
-     }, function(error){
-       loading.dismiss();
-     });
-   });
+        NativeStorage.setItem('CurrentUser', userProfile)
+          .then(function () {
+            loading.dismiss();
+            nav.push(TabsPage);
+          }, function (error) {
+            console.log(error);
+            loading.dismiss();
+          })
+      }, function (error) {
+        loading.dismiss();
+      });
+    });
   }
 
   loginFacebook() {
@@ -86,19 +84,17 @@ export class LoginPage {
     let permissions = new Array<string>();
 
     //Facebook permission that app need
-    permissions = ["public_profile","email"];
+    permissions = ["public_profile", "email"];
     Facebook.login(permissions)
       .then(function (response) {
-        console.log('loginFacebook - response : '+JSON.stringify(response));
         let userId = response.authResponse.userID;
         let params = new Array<string>();
         //Getting name and gender properties
         Facebook.api("/me?fields=id,name,gender,first_name,last_name,locale,age_range,picture,email", params)
           .then(function (user) {
-            console.log('loginFacebook - user : '+JSON.stringify(user));
             //Save user info in the NativeStorage
             let expirationDate = new Date(
-                  new Date().getTime() + response.authResponse.expiresIn * 1000
+              new Date().getTime() + response.authResponse.expiresIn * 1000
             ).toISOString();
             let userProfile = new UserProfile(
               response.authResponse.userID,
@@ -117,46 +113,43 @@ export class LoginPage {
               true,
               ProfileType.Facebook
             );
-            console.log('loginFacebook - userProfile : '+JSON.stringify(userProfile));
+
             Parse.FacebookUtils.logIn(userProfile)
-            .then(function (userParse) {
-              console.log('loginFacebook - userParse : '+JSON.stringify(userParse));
-              console.log('loginFacebook - userParse sessionToken : '+userParse.get('sessionToken'));
-              console.log('loginFacebook - userParse existed : '+userParse.existed());
-              console.log('loginFacebook - userParse id : '+userParse.id);
-              userProfile.parseSessionToken = userParse.get('sessionToken');
-              userProfile.parseUsername=userParse.id;
-            }, function (error) {
-              console.log('loginFacebook - logIn: '+JSON.stringify(error));
-              loading.dismiss();
-            }).then(function (userParse) {
-              NativeStorage.setItem('CurrentUser',userProfile)
-              .then(function () {
-              var currentUser = Parse.User.current();
-              var query = new Parse.Query(Parse.Role);
-              query.equalTo("name", "StandardUser");
-              query.find({
-                  success : function(roles) {
-                      console.log("roles: " + roles.length);
-                      for (var i = 0; i < roles.length; i++) {
+              .then(function (userParse) {
+
+                userProfile.parseSessionToken = userParse.get('sessionToken');
+                userProfile.parseUsername = userParse.id;
+              }, function (error) {
+                console.log('loginFacebook - logIn: ' + JSON.stringify(error));
+                loading.dismiss();
+              }).then(function (userParse) {
+                NativeStorage.setItem('CurrentUser', userProfile)
+                  .then(function () {
+                    var currentUser = Parse.User.current();
+                    var query = new Parse.Query(Parse.Role);
+                    query.equalTo("name", "StandardUser");
+                    query.find({
+                      success: function (roles) {
+                        console.log("roles: " + roles.length);
+                        for (var i = 0; i < roles.length; i++) {
                           roles[i].getUsers().add(currentUser);
                           roles[i].save();
+                        }
+                        loading.dismiss();
+                        nav.push(TabsPage);
+                      },
+                      error: function (error) {
+                        console.log('Role error : ' + JSON.stringify(error));
                       }
-                      loading.dismiss();
-                      nav.push(TabsPage);
-                  },
-                  error : function(error) {
-                      console.log('Role error : '+JSON.stringify(error));
-                  }
-                });
+                    });
+                  }, function (error) {
+                    console.log(error);
+                    loading.dismiss();
+                  })
               }, function (error) {
-                console.log(error);
+                console.log('loginFacebook - storage : ' + JSON.stringify(error));
                 loading.dismiss();
               })
-            }, function (error) {
-              console.log('loginFacebook - storage : '+JSON.stringify(error));
-              loading.dismiss();
-            })
           })
       }, function (error) {
         console.log(error);
@@ -165,7 +158,7 @@ export class LoginPage {
   }
 
   // to remove
-  loginDebug(){
+  loginDebug() {
     this.navCtrl.push(TabsPage);
   }
 }

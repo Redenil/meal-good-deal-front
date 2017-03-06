@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, isDevMode } from '@angular/core';
 import { ConfigHelper } from '../../helpers/configHelper'
 import { Parse } from 'parse';
 import { DealModel } from './deal.model';
@@ -12,6 +12,7 @@ export class DealDataService {
     constructor(public config: ConfigHelper) {
         Parse.initialize(config.configurations.parse.parseApplicationId);
         Parse.serverURL = config.configurations.parse.parseServerUrl;
+        Parse.masterKey = config.configurations.parse.parseMasterKey;
         Parse.javaScriptKey = config.configurations.parse.javaScriptKey;
         Parse.fileKey = config.configurations.parse.fileKey;
     }
@@ -22,7 +23,8 @@ export class DealDataService {
         let DEAL_NUMBER = 10;
         return new Promise(function (resolve, reject) {
             var currentUser = Parse.User.current();
-            console.log('getDeals - currentUser : '+JSON.stringify(currentUser));
+
+
             let query = new Parse.Query('MealDeal');
             query.include('file');
             query.include('place');
@@ -84,7 +86,7 @@ export class DealDataService {
 
         return new Promise(function (resolve, reject) {
             var currentUser = Parse.User.current();
-            console.log('currentUser : '+JSON.stringify(currentUser));
+            console.log('currentUser : ' + JSON.stringify(currentUser));
             mealDeal.set("title", deal.title);
             mealDeal.set("description", deal.description);
             mealDeal.set("location", deal.location);
@@ -112,7 +114,7 @@ export class DealDataService {
 
             var parseFile = new Parse.File('picture-' + self.createGuid(), { base64: deal.fileImage });
             parseFile.save().then(function () {
-                console.log('currentUser.sessionToken : '+JSON.stringify(currentUser.get('sessionToken')));
+                console.log('currentUser.sessionToken : ' + JSON.stringify(currentUser.get('sessionToken')));
                 mealDeal.set('file', parseFile);
                 mealDeal.save(null, {
                     useMasterKey: false,

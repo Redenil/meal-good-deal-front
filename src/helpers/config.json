@@ -1,6 +1,7 @@
 {
     "parse": {
         "parseApplicationId": "meal-deal",
+        "parseMasterKey": "mealdealkey",
         "parseServerUrl": "http://mealdeal2017.herokuapp.com/parse",
         "javaScriptKey": "mealDealJsKey",
         "fileKey": "mealdealFileKey"

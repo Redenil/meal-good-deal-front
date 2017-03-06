@@ -1,5 +1,5 @@
 import { Component, ViewChild, OnInit } from '@angular/core';
-import { NavController, LoadingController, ToastController, ViewController } from 'ionic-angular';
+import { NavController, LoadingController, ToastController, ViewController, AlertController } from 'ionic-angular';
 import { Keyboard, Geolocation } from 'ionic-native';
 import { PlaceModel } from '../../services/models'
 
@@ -25,7 +25,8 @@ export class MapsPage implements OnInit {
     public loadingCtrl: LoadingController,
     public toastCtrl: ToastController,
     public GoogleMapsService: GoogleMapsService,
-    public viewCtrl: ViewController
+    public viewCtrl: ViewController,
+    public alertCtrl: AlertController
   ) {
   }
 
@@ -151,7 +152,12 @@ export class MapsPage implements OnInit {
 
       _loading.dismiss();
     }).catch((error) => {
-      console.log('Error getting location', error);
+      let alert = this.alertCtrl.create({
+        title: 'Impossible gelocation!',
+        subTitle: 'Please turn on geolocation on your device!',
+        buttons: ['OK']
+      });
+      alert.present();
       _loading.dismiss();
     });
   }
