@@ -23,7 +23,9 @@ export class MyApp {
         // user is previously logged and we have his data
         // we will let him access the app
         console.log("CurrentUser : "+data.name);
-        if((new Date().getTime() - new Date(data.expiration_date).getTime())<1){
+        console.log("SessionToken : "+data.parseSessionToken);
+        if((new Date().getTime() - new Date(data.expiration_date).getTime())<1
+            && data.parseSessionToken!= undefined){
           env.nav.push(TabsPage);
           Splashscreen.hide();
         }else{

@@ -19,7 +19,6 @@ export class LoginPage {
     public config: ConfigHelper) {
     console.log('constructor LoginPage');
     Parse.initialize(config.configurations.parse.parseApplicationId);
-    Parse.masterKey = config.configurations.parse.parseMasterKey;
     Parse.serverURL = config.configurations.parse.parseServerUrl;
     Parse.javaScriptKey = config.configurations.parse.javaScriptKey;
     Parse.fileKey = config.configurations.parse.fileKey;
@@ -122,20 +121,40 @@ export class LoginPage {
             Parse.FacebookUtils.logIn(userProfile)
             .then(function (userParse) {
               console.log('loginFacebook - userParse : '+JSON.stringify(userParse));
-            }, function (userParse,error) {
-              console.log('loginFacebook - Error : '+JSON.stringify(error));
+              console.log('loginFacebook - userParse sessionToken : '+userParse.get('sessionToken'));
+              console.log('loginFacebook - userParse existed : '+userParse.existed());
+              console.log('loginFacebook - userParse id : '+userParse.id);
+              userProfile.parseSessionToken = userParse.get('sessionToken');
+              userProfile.parseUsername=userParse.id;
+            }, function (error) {
+              console.log('loginFacebook - logIn: '+JSON.stringify(error));
               loading.dismiss();
             }).then(function (userParse) {
               NativeStorage.setItem('CurrentUser',userProfile)
               .then(function () {
-                loading.dismiss();
-                nav.push(TabsPage);
+              var currentUser = Parse.User.current();
+              var query = new Parse.Query(Parse.Role);
+              query.equalTo("name", "StandardUser");
+              query.find({
+                  success : function(roles) {
+                      console.log("roles: " + roles.length);
+                      for (var i = 0; i < roles.length; i++) {
+                          roles[i].getUsers().add(currentUser);
+                          roles[i].save();
+                      }
+                      loading.dismiss();
+                      nav.push(TabsPage);
+                  },
+                  error : function(error) {
+                      console.log('Role error : '+JSON.stringify(error));
+                  }
+                });
               }, function (error) {
                 console.log(error);
                 loading.dismiss();
               })
             }, function (error) {
-              console.log('loginFacebook - Error : '+JSON.stringify(error));
+              console.log('loginFacebook - storage : '+JSON.stringify(error));
               loading.dismiss();
             })
           })

@@ -14,6 +14,8 @@ export class UserProfile {
     public picture: any;
     public isConnected:boolean
     public profileType: ProfileType;
+    public parseSessionToken:string;
+    public parseUsername:string;
 
     constructor(
         id: string = null,
