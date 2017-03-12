@@ -3,13 +3,15 @@ import { ConfigHelper } from '../../helpers/configHelper'
 import { Parse } from 'parse';
 import { DealModel } from './deal.model';
 import { NativeStorage } from 'ionic-native';
+import { Context } from '../context/context'
 
 @Injectable()
 export class DealDataService {
     public serverApi: any;
     public sessionToken: string;
 
-    constructor(public config: ConfigHelper) {
+    constructor(public config: ConfigHelper,
+        public context: Context) {
         Parse.initialize(config.configurations.parse.parseApplicationId);
         Parse.serverURL = config.configurations.parse.parseServerUrl;
         Parse.masterKey = config.configurations.parse.parseMasterKey;
@@ -22,17 +24,12 @@ export class DealDataService {
         let list = new Array<DealModel>();
         let DEAL_NUMBER = 10;
         return new Promise(function (resolve, reject) {
-            var currentUser = Parse.User.current();
-
-
             let query = new Parse.Query('MealDeal');
             query.include('file');
             query.include('place');
             query.limit(DEAL_NUMBER);
             query.skip(DEAL_NUMBER * page);
-            query.find({
-                useMasterKey: false,
-                sessionToken:currentUser.get('sessionToken'),
+            var queryObject = {
                 success: function (results) {
                     for (var i = 0; i < results.length; i++) {
                         let mealDeal = self.convertParseObjectToModel(results[i]);
@@ -45,7 +42,9 @@ export class DealDataService {
                     console.log(error);
                     reject();
                 }
-            });
+            };
+            Object.assign(queryObject, self.buildToken());
+            query.find(queryObject);
         });
     }
 
@@ -86,7 +85,6 @@ export class DealDataService {
 
         return new Promise(function (resolve, reject) {
             var currentUser = Parse.User.current();
-            console.log('currentUser : ' + JSON.stringify(currentUser));
             mealDeal.set("title", deal.title);
             mealDeal.set("description", deal.description);
             mealDeal.set("location", deal.location);
@@ -114,11 +112,8 @@ export class DealDataService {
 
             var parseFile = new Parse.File('picture-' + self.createGuid(), { base64: deal.fileImage });
             parseFile.save().then(function () {
-                console.log('currentUser.sessionToken : ' + JSON.stringify(currentUser.get('sessionToken')));
                 mealDeal.set('file', parseFile);
-                mealDeal.save(null, {
-                    useMasterKey: false,
-                    sessionToken:currentUser.get('sessionToken'),
+                var queryObject = {
                     success: function (savedObject) {
                         resolve(true);
                     },
@@ -126,7 +121,9 @@ export class DealDataService {
                         console.log(error);
                         reject(error);
                     }
-                });
+                };
+                Object.assign(queryObject, self.buildToken());
+                mealDeal.save(null, queryObject);
             }, function (error) {
                 console.log(error);
                 reject(error);
@@ -160,6 +157,16 @@ export class DealDataService {
         }
 
         return mealDeal;
+
+    }
+
+    buildToken(): any {
+        if (this.context.IsDebug) {
+            return { useMasterKey: true }
+        } else {
+            var currentUser = Parse.User.current();
+            return { sessionToken: currentUser.get('sessionToken'), };
+        }
 
     }
 }

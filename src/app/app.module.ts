@@ -5,7 +5,7 @@ import { ConfigHelper } from '../helpers/configHelper';
 import { HomePage, DealDetailPage, ShareDealPage, LoginPage, DealsPage, SettingsPage, DealFiltersPage, FavoritesPage, EditProfile, MapsPage } from '../pages/pages';
 import { DealList, GoogleMap, BackgroundImage, Rating } from '../components/components';
 import { TabsPage } from '../pages/tabs/tabs';
-import { DealDataService, MapsDataService } from '../services/services';
+import { DealDataService, MapsDataService, Context } from '../services/services';
 import { Storage } from '@ionic/storage';
 import { ReactiveFormsModule } from '@angular/forms';
 import { EvenOddPipe } from '../pipes/evenodd';
@@ -49,7 +49,7 @@ import { GoogleMapsService } from '../pages/maps/maps.service';
     SettingsPage,
     DealFiltersPage,
     FavoritesPage,
-        EditProfile,
+    EditProfile,
     DealDetailPage,
     MapsPage
   ],
@@ -62,6 +62,7 @@ import { GoogleMapsService } from '../pages/maps/maps.service';
     ConfigHelper,
     DealDataService,
     MapsDataService,
-    GoogleMapsService]
+    GoogleMapsService,
+    Context]
 })
 export class AppModule { }

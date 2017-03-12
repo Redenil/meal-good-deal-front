@@ -2,7 +2,8 @@ import { Component, OpaqueToken, Injectable, Inject } from '@angular/core';
 import { ViewController, NavController, NavParams, LoadingController } from 'ionic-angular';
 import { TwitterConnect, Facebook, NativeStorage } from 'ionic-native';
 import { TabsPage } from '../tabs/tabs';
-import { UserProfile, ProfileType } from '../../services/models'
+import { UserProfile, ProfileType } from '../../services/models';
+import { Context } from '../../services/services';
 import { Parse } from 'parse';
 import { ConfigHelper } from '../../helpers/configHelper';
 
@@ -17,8 +18,9 @@ export class LoginPage {
     private navParams: NavParams,
     private loadingCtrl: LoadingController,
     private viewCtrl: ViewController,
-    public config: ConfigHelper) {
-    
+    public config: ConfigHelper,
+    public context: Context) {
+
     Parse.initialize(config.configurations.parse.parseApplicationId);
     Parse.serverURL = config.configurations.parse.parseServerUrl;
     Parse.javaScriptKey = config.configurations.parse.javaScriptKey;
@@ -57,6 +59,7 @@ export class LoginPage {
         NativeStorage.setItem('CurrentUser', userProfile)
           .then(function () {
             loading.dismiss();
+            self.context.IsDebug = false;
             self.navigateForward();
           }, function (error) {
             console.log(error);
@@ -131,6 +134,7 @@ export class LoginPage {
                           roles[i].save();
                         }
                         loading.dismiss();
+                        self.context.IsDebug = false;
                         self.navigateForward();
                       },
                       error: function (error) {
@@ -154,6 +158,7 @@ export class LoginPage {
 
   // to remove
   loginDebug() {
+    this.context.IsDebug = true;
     this.navigateForward();
   }
 
