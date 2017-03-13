@@ -29,8 +29,6 @@
         </ion-col>
     </ion-row>
 
-
-
     <div class="button-bar">
 
         <button ion-button primary>
@@ -46,8 +44,9 @@
         <button ion-button primary (click)="openInAppBrowser(contact.website)">
                 <ion-icon name="add-circle"></ion-icon>
             </button>
-        <button ion-button primary (click)="openInAppBrowser(contact.website)">
-                <ion-icon name="star"></ion-icon>
+        <button ion-button primary (click)="switchFavorite()">
+                <ion-icon *ngIf="!isFavorite" name="star-outline"></ion-icon>
+                <ion-icon *ngIf="isFavorite" name="star"></ion-icon>
             </button>
     </div>
 

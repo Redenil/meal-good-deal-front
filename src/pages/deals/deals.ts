@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams, ModalController, LoadingController } from 'ionic-angular';
 import { DealList } from '../../components/deal-list/deal-list';
-import { DealFiltersPage } from '../deal-filters/deal-filters'
-import { DealDataService } from '../../services/services'
-import { DealModel } from '../../services/models'
+import { DealFiltersPage } from '../deal-filters/deal-filters';
+import { DealDataService } from '../../services/services';
+import { DealModel } from '../../services/models';
 import { Subject } from 'rxjs/Subject';
 
 @Component({

@@ -1,4 +1,4 @@
-import { Component} from '@angular/core';
+import { Component } from '@angular/core';
 import { NavController, NavParams, ToastController, ModalController, ActionSheetController, ActionSheet, AlertController, AlertOptions } from 'ionic-angular';
 // import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms'
 import { DealDataService, MapsDataService } from '../../services/services'
@@ -26,7 +26,7 @@ export class ShareDealPage {
     private toastCtrl: ToastController,
     private modalCtrl: ModalController,
     private actionSheetCtrl: ActionSheetController,
-    private alertCtrl : AlertController,
+    private alertCtrl: AlertController,
     private mapsDataservice: MapsDataService) {
     this.mealDeal = new DealModel();
     this.mealDeal.isTwitterShared = false;
@@ -39,8 +39,8 @@ export class ShareDealPage {
     this.takePicture();
   }
 
-  ionViewWillLeave(){
-    this.mealDeal =  new DealModel();
+  ionViewWillLeave() {
+    this.mealDeal = new DealModel();
   }
 
   takePicture() {
@@ -119,23 +119,26 @@ export class ShareDealPage {
   }
 
   savePlan() {
+    let env = this;
     this.dealDataService.createDeal(this.mealDeal).then(p => {
       let alert = this.alertCtrl.create({
-      title: 'Deal shared!',
-      subTitle: "Let's see whether you get a tones of likes !",
-      buttons: [{
-        text : 'ok',
-        handler: () =>{
-          this.navCtrl.push(HomePage);
-        }}]  
+        title: 'Deal shared!',
+        subTitle: "Let's see whether you get a tones of likes !",
+        buttons: [{
+          text: 'ok',
+          handler: () => {
+            env.navCtrl.setRoot(HomePage, { tabIndex: 0 });
+          }
+        }]
       });
-        alert.present();
+      alert.present();
     })
       .catch(p => {
         let toast = this.toastCtrl.create({
           message: p.message,
           duration: 3000
         });
+
         toast.present();
       });
   }

@@ -59,7 +59,7 @@ export class DealDataService {
         var mainQuery = Parse.Query.or(titleQuery, descriptionQuery);
         mainQuery.include('file');
         return new Promise((resolve, reject) => {
-            mainQuery.find({
+            var queryObject = {
                 success: function (results) {
                     for (var i = 0; i < results.length; i++) {
                         let mealDeal = self.convertParseObjectToModel(results[i]);
@@ -72,7 +72,9 @@ export class DealDataService {
                     console.log(error);
                     reject();
                 }
-            });
+            };
+            Object.assign(queryObject, self.buildToken());
+            mainQuery.find(queryObject);
         });
     }
 
@@ -141,6 +143,7 @@ export class DealDataService {
     convertParseObjectToModel(parseMealDeal: any): DealModel {
         var model = parseMealDeal.toJSON();
         var mealDeal = new DealModel();
+        mealDeal.id = model.objectId;
         mealDeal.title = model.title;
         mealDeal.description = model.description;
         mealDeal.location = model.location;
@@ -160,13 +163,108 @@ export class DealDataService {
 
     }
 
+    addFavorite(dealModel: DealModel): Promise<boolean> {
+        var currentUser = Parse.User.current();
+        var favorite = currentUser.relation("favorites");
+        var dealParseObject = this.convertModelToParseObject(dealModel);
+        favorite.add(dealParseObject);
+
+        return new Promise(function (resolve, reject) {
+            currentUser.save(null, {
+                sessionToken: currentUser.get('sessionToken'),
+                success: function (savedObject) {
+                    resolve(true);
+                },
+                error: function (error) {
+                    console.log(error);
+                    reject(error);
+                }
+            });
+        });
+    }
+
+    switchFavorite(dealModel: DealModel, isFavorite: boolean): Promise<boolean> {
+        var currentUser = Parse.User.current();
+        var favorite = currentUser.relation("favorites");
+        var dealParseObject = this.convertModelToParseObject(dealModel);
+        isFavorite ? favorite.add(dealParseObject) : favorite.remove(dealParseObject);
+
+        return new Promise(function (resolve, reject) {
+            currentUser.save(null, {
+                sessionToken: currentUser.get('sessionToken'),
+                success: function (savedObject) {
+                    resolve(true);
+                },
+                error: function (error) {
+                    console.log(error);
+                    reject(error);
+                }
+            });
+        });
+    }
+
+
+    removeFavorite(dealModel: DealModel): Promise<boolean> {
+        var currentUser = Parse.User.current();
+        var favorite = currentUser.relation("favorites");
+        var dealParseObject = this.convertModelToParseObject(dealModel);
+        favorite.remove(dealParseObject);
+
+        return new Promise(function (resolve, reject) {
+            currentUser.save(null, {
+                sessionToken: currentUser.get('sessionToken'),
+                success: function (savedObject) {
+                    resolve(true);
+                },
+                error: function (error) {
+                    console.log(error);
+                    reject(error);
+                }
+            });
+        });
+    }
+
+    convertModelToParseObject(dealModel: DealModel): any {
+        let MealDeal = Parse.Object.extend("MealDeal");
+        let mealDeal = new MealDeal();
+        mealDeal.set("id", dealModel.id);
+
+        return mealDeal;
+    }
+
     buildToken(): any {
         if (this.context.IsDebug) {
             return { useMasterKey: true }
         } else {
             var currentUser = Parse.User.current();
-            return { sessionToken: currentUser.get('sessionToken'), };
+            return { sessionToken: currentUser.get('sessionToken') };
         }
 
+    }
+
+    getUserFavorites(): Promise<Array<DealModel>> {
+        let self = this;
+        let list = new Array<DealModel>();
+        var currentUser = Parse.User.current();
+        var favoritesQuery = currentUser.relation("favorites");
+
+        return new Promise(function (resolve, reject) {
+            var queryObject = {
+                sessionToken: currentUser.get('sessionToken'),
+                success: function (results) {
+                    for (var i = 0; i < results.length; i++) {
+                        let mealDeal = self.convertParseObjectToModel(results[i]);
+
+                        list.push(mealDeal);
+                    }
+                    resolve(list);
+                },
+                error: function (error) {
+                    console.log(error);
+                    reject();
+                }
+            };
+            favoritesQuery.query().find(queryObject);
+        });
     }
 }
