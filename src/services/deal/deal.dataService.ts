@@ -152,6 +152,7 @@ export class DealDataService {
         mealDeal.fileImage = model.file ? model.file.url : null;
         mealDeal.isFacebookShared = model.isFacebookShared;
         mealDeal.isTwitterShared = model.isTwitterShared;
+        mealDeal.userPicture = model.userPicture;
 
         if (model.place) {
             mealDeal.place.address = model.place.address;

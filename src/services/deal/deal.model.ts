@@ -10,6 +10,7 @@ export class DealModel {
     public fileImage: any;
     public isFacebookShared: boolean;
     public isTwitterShared: boolean;
+    public userPicture: string;
 
     constructor() {
         this.place = new PlaceModel();
