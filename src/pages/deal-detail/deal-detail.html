@@ -36,7 +36,7 @@
                  <ion-label style="font-size: 1.0em">{{deal.price}}</ion-label>
              </button>
         <button ion-button primary (click)="call(contact.phone)">
-                <ion-icon name="contact"></ion-icon>
+                <img class="avatar-icon" [src]="deal.userPicture" />
              </button>
         <button ion-button primary (click)="sendMail(contact.email)">
                 <ion-icon name="md-share"></ion-icon>
