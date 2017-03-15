@@ -1,16 +1,17 @@
 import { Component} from '@angular/core';
-import { ModalController, LoadingController, Platform, NavParams, ViewController} from 'ionic-angular';
+import { ModalController, LoadingController, Platform, NavParams, ViewController, App} from 'ionic-angular';
 import { NativeStorage } from 'ionic-native';
-import { FormBuilder, FormGroup, Validators , AbstractControl } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators , AbstractControl, FormControl } from '@angular/forms';
 import { UserProfile } from '../../services/models';
 
 @Component({
-  selector: 'page-edit-profile',
+  selector: 'page-settings',
   templateUrl: 'edit-profile.html',
 })
 export class EditProfile {
-  public profile: UserProfile;
 
+  settingsForm: FormGroup;
+  public profile: UserProfile;
   userName:AbstractControl;
   firstName:AbstractControl;
   lastName:AbstractControl;
@@ -20,11 +21,22 @@ export class EditProfile {
 
   submitAttempt: boolean = false;
 
-  constructor(public params: NavParams,
+  constructor(
+    private app: App,
+    public params: NavParams,
     public loadingCtrl: LoadingController,
     public viewCtrl: ViewController,
     public formBuilder: FormBuilder) {
-    this.profile = this.params.get("CurrentUser");
+
+      this.settingsForm = new FormGroup({
+      name: new FormControl(),
+      location: new FormControl(),
+      description: new FormControl(),
+      currency: new FormControl(),
+      weather: new FormControl(),
+      notifications: new FormControl()
+    });
+  /*  this.profile = this.params.get("CurrentUser");
     let emailRegex = '^[a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,15})$';
     this.profileForm = formBuilder.group({
         userName: [this.profile.userName,Validators.compose([Validators.maxLength(30),
@@ -44,6 +56,7 @@ export class EditProfile {
     this.firstName=this.profileForm.controls["firstName"];
     this.lastName=this.profileForm.controls["lastName"];
     this.email=this.profileForm.controls["email"];
+    */
   }
 
   dismiss() {
@@ -74,4 +87,11 @@ export class EditProfile {
       })
     }
   }
+
+   logout() {
+    NativeStorage.remove('CurrentUser');
+    const root = this.app.getRootNav();
+    root.popToRoot();
+  }
+
 }

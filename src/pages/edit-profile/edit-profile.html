@@ -4,7 +4,7 @@
             Mon compte
         </ion-title>
         <ion-buttons start>
-            <button ion-button (click)="dismiss()">
+            <button ion-button >
         <span ion-text color="primary" showWhen="ios">Cancel</span>
         <ion-icon name="md-close" showWhen="android,windows"></ion-icon>
       </button>
@@ -12,34 +12,52 @@
 
     </ion-toolbar>
 </ion-header>
-<ion-content padding>
-    <h1>Profil utilisateur</h1>
-    <div>
-        <form [formGroup]="profileForm" (ngSubmit)="update()">
-            <ion-item [class.invalid]="!userName.valid &&
-                (userName.touched)">
-                <ion-label color="primary" floating>Nom d'utilisateur</ion-label>
-                <ion-input type="text" formControlName="userName" name="userName" ngDefaultControl></ion-input>
-            </ion-item>
 
-            <ion-item [class.invalid]="!firstName.valid &&
-                (firstName.touched)">
-                <ion-label color="primary" floating>Prénom</ion-label>
-                <ion-input type="text" formControlName="firstName" name="firstName" ngDefaultControl></ion-input>
-            </ion-item>
 
-            <ion-item [class.invalid]="!lastName.valid &&
-                (lastName.touched)">
-                <ion-label color="primary" floating>Nom</ion-label>
-                <ion-input type="text" formControlName="lastName" name="lastName" ngDefaultControl></ion-input>
-            </ion-item>
-
-            <ion-item [class.invalid]="!email.valid &&
-                (email.touched)">
-                <ion-label color="primary" floating>E-mail</ion-label>
-                <ion-input type="text" formControlName="email" name="email" ngDefaultControl></ion-input>
-            </ion-item>
-            <button ion-button type="submit" [disabled]="!profileForm.valid" block>Mettre à jour</button>
-        </form>
+<ion-content class="settings-content">
+    <div class="user-image-content">
+      <ion-row no-padding class="user-image-row">
+        <ion-col no-padding width-40>
+          <img src="../assets/img/profile.png" class="user-image"> 
+        </ion-col>
+      </ion-row>
+      <h3 class="image-action">Change profile picture</h3>
     </div>
+
+    <form [formGroup]="settingsForm" class="settings-form">
+    <ion-list class="user-data-content">
+      <ion-item>
+        <ion-label stacked>Name</ion-label>
+        <ion-input type="text" formControlName="name"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label stacked>Location</ion-label>
+        <ion-input type="text" formControlName="location"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label stacked>Description</ion-label>
+        <ion-textarea formControlName="description" rows="5" placeholder="Your description here..."></ion-textarea>
+      </ion-item>
+    </ion-list>
+
+    
+
+    <ion-list class="switchers-list">
+      <ion-item class="switcher-item">
+        <ion-label>Notifications</ion-label>
+        <ion-toggle formControlName="notifications"></ion-toggle>
+      </ion-item>
+    </ion-list>
+  </form>
+
+   <button class="alt-button" ion-button full (click)="showPrivacyModal()">Privacy policy</button>
+
+  <button class="alt-button" ion-button full (click)="showTermsModal()">Terms of use</button>
+
+  <button class="alt-button logout-button" ion-button full icon-left (click)="logout()">
+    <ion-icon name="log-out"></ion-icon>
+    Log out
+  </button>
+
+
 </ion-content>

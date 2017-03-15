@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { Nav,NavController, NavParams,App,ModalController} from 'ionic-angular';
+import { Nav,NavController, NavParams,App,ModalController, SegmentButton, LoadingController, MenuController} from 'ionic-angular';
 import { TwitterConnect, NativeStorage } from 'ionic-native';
 import { UserProfile, ProfileType } from '../../services/models';
 import { LoginPage } from '../login/login';
@@ -14,6 +14,7 @@ export class SettingsPage {
   public isConnected: boolean;
 
   constructor(private app: App,
+    public menu: MenuController,
     private navCtrl: NavController,
     public navParams: NavParams,
     public modalCtrl: ModalController) {
@@ -30,6 +31,12 @@ export class SettingsPage {
       }, function (error) {
         console.log('user not connected');
       });
+  }
+
+    goToSettings() {
+    // close the menu when clicking a link from the menu
+    this.menu.close();
+    this.app.getRootNav().push(EditProfile);
   }
 
   logout() {
