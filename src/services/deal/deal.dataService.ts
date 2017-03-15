@@ -94,6 +94,7 @@ export class DealDataService {
             mealDeal.set("isTwitterShared", Boolean(deal.isTwitterShared));
             mealDeal.set("isFacebookShared", Boolean(deal.isFacebookShared));
             mealDeal.set("user", currentUser);
+            mealDeal.set("userPicture", currentUser.get("authData").facebook.picture);
             var mealDealACL = new Parse.ACL();
             mealDealACL.setRoleWriteAccess("StandardUser", true);
             mealDealACL.setRoleReadAccess("StandardUser", true);
