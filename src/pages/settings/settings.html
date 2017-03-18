@@ -13,7 +13,7 @@
     <ion-row class="user-main-data-row">
     
         <ion-col no-padding width-33 >
-            <img src="../assets/img/profile.png" class="user-image">
+            <img [src]="profile.picture" class="user-image">
         </ion-col>      
       
         <ion-col no-padding>
@@ -72,46 +72,18 @@
       </ion-segment>
   </div>
   <div [ngSwitch]="display" class="user-content">
-    <div *ngSwitchCase="'list'" class="list-view">
-      <div class="list-item" *ngFor="let post of profile.posts">
-         <span class="item-date">ok</span>
-
-         <ion-card>
-          <img src="../assets/img/profile.png" class="user-image">
-          <ion-card-content>
-            <p class="item-text">
-              {{post.description}}
-            </p>
-          </ion-card-content>
-          <ion-row no-padding class="actions-row">
-            <ion-col no-padding width-30 text-left>
-              <button class="action-button" ion-button clear small color="danger" icon-left>
-                <ion-icon isActive="{{post.liked}}" name='heart'></ion-icon>
-                  {{post.likes}} Likes
-              </button>
-            </ion-col>
-            <ion-col no-padding width-45 text-center>
-              <button class="action-button" ion-button clear small color="danger" icon-left>
-                <ion-icon name='chatbubbles'></ion-icon>
-                  {{post.comments}} Comments
-              </button>
-            </ion-col>
-            <ion-col no-padding width-25 text-right>
-              <button class="action-button" ion-button clear small color="danger" icon-left (click)="sharePost(post)">
-                <ion-icon name='share-alt'></ion-icon>
-                Share
-              </button>
-            </ion-col>
-          </ion-row>
-        </ion-card>
-
+    <div *ngSwitchCase="'list'">
+      <div>     
+               <deal-card [deals]="deals" [hasChanged]="hasChanged" [pageNumber]="pageNumber">
+               </deal-card>
       </div>
     </div>
 
     <div *ngSwitchCase="'grid'" class="grid-view">
-      <ion-row wrap class="grid-row">
-        <ion-col width-33 class="grid-item" *ngFor="let post of profile.posts">
-          <img src="../assets/img/profile.png" class="user-image">
+      <ion-row class="grid-row">
+        <ion-col class="grid-item">
+           <deal-list [deals]="deals" [hasChanged]="hasChanged" [pageNumber]="pageNumber">
+               </deal-list>
         </ion-col>
       </ion-row>
     </div>

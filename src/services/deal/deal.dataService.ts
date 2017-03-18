@@ -269,4 +269,31 @@ export class DealDataService {
             favoritesQuery.query().find(queryObject);
         });
     }
+
+        getUserDeals(): Promise<Array<DealModel>> {
+        let self = this;
+        let list = new Array<DealModel>();
+        var currentUser = Parse.User.current();
+        var mealQuery = new Parse.Query('MealDeal');
+        mealQuery.equalTo("user", currentUser);
+
+        return new Promise(function (resolve, reject) {
+            var queryObject = {
+                
+                success: function (results) {
+                    for (var i = 0; i < results.length; i++) {
+                        let mealDeal = self.convertParseObjectToModel(results[i]);
+
+                        list.push(mealDeal);
+                    }
+                    resolve(list);
+                },
+                error: function (error) {
+                    console.log(error);
+                    reject();
+                }
+            };
+            mealQuery.find(queryObject);
+        });
+    }
 }

@@ -1,0 +1,39 @@
+<ion-card>
+    <ion-row>
+        <ion-row width-50>
+            <ion-list class="card-background-page">
+                <ion-card *ngFor="let deal of (deals | evenodd:'even')" (click)="showDealDetail(deal)">
+                    <img class="deal-image" [src]="deal.fileImage" />
+                    <a class="like-button">
+             15
+            <ion-icon class="like-icon" ios="ios-heart" md="md-heart"></ion-icon>
+          </a>
+                    <img class="avatar-icon" [src]="deal.fileImage" />
+                    <ion-icon class="localization-icon" ios="ios-pin" md="md-pin"></ion-icon>
+                    <a class="price-button">
+            {{deal.price}}
+            <ion-icon class="price-icon" ios="logo-euro" md="logo-euro"></ion-icon>
+          </a>
+                </ion-card>
+            </ion-list>
+        </ion-row>
+        <ion-row width-50>
+            <ion-list class="card-background-page">
+                <ion-card *ngFor="let deal of (deals |evenodd:'odd')" (click)="showDealDetail(deal)">
+                    <img class="deal-image" [src]="deal.fileImage" />
+                    <a class="like-button">
+             15
+            <ion-icon class="like-icon" ios="ios-heart" md="md-heart"></ion-icon>
+          </a>
+                    <img class="avatar-icon" [src]="deal.userPicture" />
+                    <ion-icon class="localization-icon" ios="ios-pin" md="md-pin"></ion-icon>
+                    <a class="price-button">
+            {{deal.price}}
+            <ion-icon class="price-icon" ios="logo-euro" md="logo-euro"></ion-icon>
+          </a>
+                </ion-card>
+            </ion-list>
+        </ion-row>
+
+    </ion-row>
+</ion-card>

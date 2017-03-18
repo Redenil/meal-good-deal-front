@@ -4,6 +4,9 @@ import { TwitterConnect, NativeStorage } from 'ionic-native';
 import { UserProfile, ProfileType } from '../../services/models';
 import { LoginPage } from '../login/login';
 import { EditProfile } from '../edit-profile/edit-profile';
+import { DealDataService } from '../../services/services';
+import { DealModel } from '../../services/models';
+import { dealcard } from '../../components/deal-card/deal-card';
 
 @Component({
   selector: 'page-settings',
@@ -12,14 +15,21 @@ import { EditProfile } from '../edit-profile/edit-profile';
 export class SettingsPage {
   public profile: UserProfile;
   public isConnected: boolean;
+  public deals: Array<DealModel>;
+  display: string;
 
-  constructor(private app: App,
+  constructor(
+    public dealDataService: DealDataService,
+    private app: App,
     public menu: MenuController,
     private navCtrl: NavController,
     public navParams: NavParams,
     public modalCtrl: ModalController) {
+
+    this.display = "list";
     this.profile = new UserProfile();
     this.isConnected = false;
+    
   }
 
   ionViewWillEnter() {
@@ -31,12 +41,25 @@ export class SettingsPage {
       }, function (error) {
         console.log('user not connected');
       });
+
+      this.dealDataService.getUserDeals().then(result => {
+      this.deals = result;
+      
+    });
   }
 
     goToSettings() {
     // close the menu when clicking a link from the menu
     this.menu.close();
     this.app.getRootNav().push(EditProfile);
+  }
+
+   onSegmentChanged(segmentButton: SegmentButton) {
+    // console.log('Segment changed to', segmentButton.value);
+  }
+
+  onSegmentSelected(segmentButton: SegmentButton) {
+    // console.log('Segment selected', segmentButton.value);
   }
 
   logout() {

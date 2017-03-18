@@ -1,0 +1,77 @@
+deal-card {
+.card-background-page {
+  width: 100%;
+
+  ion-card {
+    position: relative;
+    text-align: center;
+  }
+
+  .card-title {
+    position: relative;
+    vertical-align: middle;
+    display:inline-block;
+    overflow:hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 1.1em;
+    color: color($colors, dark);
+  }
+
+  .deal-image{
+    border-radius: 5px;
+	  -webkit-border-radius: 5px;
+   	-moz-border-radius: 5px;
+  }
+  .like-button{
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    color: color($colors, light);
+    width: auto;
+  }
+
+  .like-icon{
+      color: color($colors, light);
+    }
+
+  .avatar-icon{
+    position: absolute;
+    bottom: 5px;
+    left: 5px;
+    color: color($colors, light);
+    width: 20px;
+    height: 20px;
+    border-radius: 20px;
+	  -webkit-border-radius: 20px;
+   	-moz-border-radius: 20px;
+    border-style: solid;
+    border-width: 1px;
+    border-color: color($colors, light);
+  }
+
+  .localization-icon{
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    color: color($colors, light);
+  }
+
+  .price-button{
+    color: color($colors, light);    
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+  }
+
+  .price-icon{
+    color: color($colors, light);
+    font-size: 1.2rem;
+  }
+
+  .deal-content{
+    height: auto;
+    padding: 1px;
+  }
+}
+}

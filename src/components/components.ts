@@ -1,4 +1,5 @@
 export * from './deal-list/deal-list'
+export * from './deal-card/deal-card'
 export * from './place-info/place-info'
 export * from './google-map/google-map'
 export * from './background-image/background-image'

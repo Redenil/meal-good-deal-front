@@ -3,7 +3,7 @@ import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
 import { ConfigHelper } from '../helpers/configHelper';
 import { HomePage, DealDetailPage, ShareDealPage, LoginPage, DealsPage, SettingsPage, DealFiltersPage, FavoritesPage, EditProfile, MapsPage } from '../pages/pages';
-import { DealList, GoogleMap, BackgroundImage, Rating } from '../components/components';
+import { DealList, GoogleMap, BackgroundImage, Rating, dealcard } from '../components/components';
 import { TabsPage } from '../pages/tabs/tabs';
 import { DealDataService, MapsDataService, Context } from '../services/services';
 import { Storage } from '@ionic/storage';
@@ -27,6 +27,7 @@ import { GoogleMapsService } from '../pages/maps/maps.service';
     DealDetailPage,
 
     DealList,
+    dealcard,
     BackgroundImage,
     GoogleMap,
     Rating,
