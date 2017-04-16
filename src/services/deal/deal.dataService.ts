@@ -270,7 +270,7 @@ export class DealDataService {
         });
     }
 
-        getUserDeals(): Promise<Array<DealModel>> {
+    getUserDeals(): Promise<Array<DealModel>> {
         let self = this;
         let list = new Array<DealModel>();
         var currentUser = Parse.User.current();
@@ -294,6 +294,32 @@ export class DealDataService {
                 }
             };
             mealQuery.find(queryObject);
+        });
+    }
+
+    getNumberOfDealsByUser(): any {
+        let self = this;
+        let numberDeal = 0;
+        var currentUser = Parse.User.current();
+        var numberQuery = new Parse.Query('MealDeal');
+        numberQuery.equalTo("user", currentUser);
+
+        return new Promise(function (resolve, reject) {
+            var queryObject = {
+                
+                success: function (results) {
+                    for (var i = 0; i < results.length; i++) {
+                        
+                        numberDeal = i;
+                    }
+                    resolve(numberDeal);
+                },
+                error: function (error) {
+                    console.log(error);
+                    reject();
+                }
+            };
+            numberQuery.find(queryObject);
         });
     }
 }
