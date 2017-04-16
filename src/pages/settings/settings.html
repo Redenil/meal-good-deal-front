@@ -20,25 +20,19 @@
           <ion-row class="social-presence-row">
             <ion-col width-50 class="social-presence-item">
               <a>
-                <h2 class="social-presence-value">7</h2>
-                <h4 class="social-presence-title">Followers</h4>
+                <h2 class="social-presence-value">{{numberDealsSettings}}</h2>
+                <h4 class="social-presence-title">Deals</h4>
               </a>
 
             </ion-col>
 
-            <ion-col width-50 class="social-presence-item">
-               <a>
-                <h2 class="social-presence-value">7</h2>
-                <h4 class="social-presence-title">Following</h4>
-               </a>
-
-            </ion-col>
+            
 
           </ion-row>
 
            <ion-row class="profile-action-row">
             <ion-col no-padding>
-              <button ion-button block small (click)="goToSettings()">
+              <button ion-button block small (click)="goToProfile()">
                 Edit profile
               </button>
             </ion-col>
