@@ -16,6 +16,7 @@ export class SettingsPage {
   public profile: UserProfile;
   public isConnected: boolean;
   public deals: Array<DealModel>;
+  public numberDealsSettings: any;
   display: string;
 
   constructor(
@@ -46,9 +47,11 @@ export class SettingsPage {
       this.deals = result;
       
     });
+
+      this.numberDealsSettings =  this.dealDataService.getNumberOfDealsByUser();
   }
 
-    goToSettings() {
+    goToProfile() {
     // close the menu when clicking a link from the menu
     this.menu.close();
     this.app.getRootNav().push(EditProfile);

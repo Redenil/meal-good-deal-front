@@ -1,4 +1,5 @@
 import { OpaqueToken } from "@angular/core";
+
 export interface ApplicationConfig {
   appName: string;
   facebookAppId: number;
